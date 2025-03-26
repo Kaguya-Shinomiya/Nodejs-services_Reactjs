@@ -29,15 +29,19 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(fileUpload());
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/auth', require('./routes/auth'));
+app.use('/roles', require('./routes/roles'));
 app.use('/categories', require('./routes/categories'));
 app.use('/products', require('./routes/products'));
 app.use('/producers', require('./routes/producers'));
 
 
+
+
 // connect to database mongodb
 mongoose.connect("mongodb://localhost:27017/DoAn_Nodejs");
 mongoose.connection.on('connected',function(){
-  console.log("connected hehehe");
+  console.log("Connected database complete !!!");
 })
 
 

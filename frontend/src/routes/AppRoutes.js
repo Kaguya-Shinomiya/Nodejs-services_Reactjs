@@ -4,8 +4,8 @@ import About from "../pages/About";
 import Contact from "../pages/Contact";
 import Product from "../pages/Product";
 import CreateProductForm from "../pages/Admin/Create_Product";
-
-// import NotFound from "../pages/NotFound";
+import AuthPage from "../pages/AuthPage";
+import PrivateRoute from "./PrivateRoute"; // Import PrivateRoute
 
 const AppRoutes = () => {
   return (
@@ -15,12 +15,11 @@ const AppRoutes = () => {
       <Route path="/about" element={<About />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/products" element={<Product />} />
-      <Route path="/login" element={<Product />} />
+      <Route path="/login" element={<AuthPage />} />
 
-
-      {/* Admin */}
-      <Route path="/admin/create_product" element={<CreateProductForm />} />
-      {/* <Route path="*" element={<NotFound />} /> */}
+      {/* Admin - Chỉ admin mới truy cập được */}
+      <Route path="/admin/create_product" 
+             element={<PrivateRoute element={<CreateProductForm />} roles={["admin"]} />} />
     </Routes>
   );
 };

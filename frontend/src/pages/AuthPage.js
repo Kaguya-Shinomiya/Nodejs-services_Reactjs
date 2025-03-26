@@ -1,7 +1,9 @@
 import { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function AuthPage() {
+    
     const [isLogin, setIsLogin] = useState(true);
     const [formData, setFormData] = useState({
         username: "",
@@ -13,6 +15,8 @@ export default function AuthPage() {
     });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
+    
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -26,22 +30,36 @@ export default function AuthPage() {
         try {
             let response;
             if (isLogin) {
-                // Gửi yêu cầu đăng nhập
-                response = await axios.post("http://localhost:5000/api/login", {
+                // Xác thực đăng nhập
+                response = await axios.post("http://127.0.0.1:5000/auth/login", {
                     email: formData.email,
                     password: formData.password
                 });
+
+                localStorage.setItem("token", response.data.token);
+                localStorage.setItem("role", response.data.role); // Lưu quyền user
                 alert("Login successful!");
+                navigate("/"); // Điều hướng về dashboard sau khi login
             } else {
+                // Kiểm tra dữ liệu trước khi đăng ký
+                if (!formData.username || !formData.email || !formData.password || !formData.role) {
+                    setError("Please fill in all required fields.");
+                    setLoading(false);
+                    return;
+                }
+
                 // Gửi yêu cầu đăng ký
-                response = await axios.post("http://localhost:5000/api/register", formData);
-                alert("Registration successful!");
+                response = await axios.post("http://127.0.0.1:5000/auth/signup", formData);
+
+                alert(" Registration successful! Please log in.");
+                setIsLogin(true);
             }
 
-            console.log("Response:", response.data);
+            // Reset form sau khi đăng nhập/đăng ký thành công
             setFormData({ username: "", email: "", password: "", fullName: "", avatarUrl: "", role: "" });
         } catch (err) {
-            setError(err.response?.data?.message || "An error occurred.");
+            console.error("❌ Auth Error:", err.response?.data);  
+            setError(err.response?.data?.message || "An unexpected error occurred.");
         }
 
         setLoading(false);
@@ -50,6 +68,7 @@ export default function AuthPage() {
     return (
         <div className="flex items-center justify-center min-h-screen bg-gray-100">
             <div className="bg-white shadow-lg rounded-lg p-8 max-w-sm w-full">
+                
                 {/* Tabs */}
                 <div className="flex justify-center mb-6">
                     <button
@@ -66,10 +85,10 @@ export default function AuthPage() {
                     </button>
                 </div>
 
-                {/* Error message */}
+                {/* Hiển thị lỗi nếu có */}
                 {error && <p className="text-red-500 text-center">{error}</p>}
 
-                {/* Form */}
+                {/* 📝 Form */}
                 <form className="space-y-4" onSubmit={handleSubmit}>
                     {!isLogin && (
                         <>
@@ -103,7 +122,7 @@ export default function AuthPage() {
                                 name="role"
                                 value={formData.role}
                                 onChange={handleChange}
-                                placeholder="Role ID"
+                                placeholder="Role (e.g., user, admin)"
                                 className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 required
                             />
@@ -136,7 +155,7 @@ export default function AuthPage() {
                     </button>
                 </form>
 
-                {/* Switch between Login/Register */}
+                {/* Chuyển giữa Đăng nhập / Đăng ký */}
                 <p className="text-center text-gray-500 mt-4">
                     {isLogin ? "Don't have an account?" : "Already have an account?"}{" "}
                     <button onClick={() => setIsLogin(!isLogin)} className="text-blue-500 underline">

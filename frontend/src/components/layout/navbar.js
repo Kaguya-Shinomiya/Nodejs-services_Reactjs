@@ -1,17 +1,17 @@
 import { useState, useEffect } from "react";
 import { FaFacebookF, FaTwitter, FaLinkedinIn, FaInstagram, FaSearch, FaUser, FaShoppingBag, FaBars, FaTimes } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
+    const [userDropdownOpen, setUserDropdownOpen] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const handleScroll = () => {
-            if (window.scrollY > 45) {
-                setIsScrolled(true);
-            } else {
-                setIsScrolled(false);
-            }
+            setIsScrolled(window.scrollY > 45);
         };
 
         window.addEventListener("scroll", handleScroll);
@@ -19,6 +19,18 @@ const Navbar = () => {
             window.removeEventListener("scroll", handleScroll);
         };
     }, []);
+
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        setIsLoggedIn(!!token);
+    }, []);
+
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        setIsLoggedIn(false);
+        navigate("/");
+        window.location.reload(); // Reload để cập nhật UI
+    };
 
     return (
         <div className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${isScrolled ? "bg-white shadow-md" : "bg-gray-100"}`}>
@@ -49,31 +61,45 @@ const Navbar = () => {
                 </button>
 
                 {/* Menu Items */}
-                <div className={`lg:flex lg:items-center lg:space-x-6 absolute lg:static top-16 left-0 w-full lg:w-auto bg-white lg:bg-transparent shadow-md lg:shadow-none transition-all duration-300 ${isOpen ? "block" : "hidden"
-                        }`}>
-                    <a href="/"
-                        className="block lg:inline-block px-4 py-2 text-base lg:text-lg hover:text-primary hover:scale-105 transition-transform duration-200"
-                    > Home
-                    </a>
-                    <a href="/about"
-                        className="block lg:inline-block px-4 py-2 text-base lg:text-lg hover:text-primary hover:scale-105 transition-transform duration-200"
-                    > About Us
-                    </a>
-                    <a href="/products"
-                        className="block lg:inline-block px-4 py-2 text-base lg:text-lg hover:text-primary hover:scale-105 transition-transform duration-200"
-                    > Products
-                    </a>
-                    <a href="/contact"
-                        className="block lg:inline-block px-4 py-2 text-base lg:text-lg hover:text-primary hover:scale-105 transition-transform duration-200"
-                    > Contact Us
-                    </a>
+                <div className={`lg:flex lg:items-center lg:space-x-6 absolute lg:static top-16 left-0 w-full lg:w-auto bg-white lg:bg-transparent shadow-md lg:shadow-none transition-all duration-300 ${isOpen ? "block" : "hidden"}`}>
+                    <a href="/" className="block lg:inline-block px-4 py-2 text-base lg:text-lg hover:text-primary hover:scale-105 transition-transform duration-200"> Home </a>
+                    <a href="/about" className="block lg:inline-block px-4 py-2 text-base lg:text-lg hover:text-primary hover:scale-105 transition-transform duration-200"> About Us </a>
+                    <a href="/products" className="block lg:inline-block px-4 py-2 text-base lg:text-lg hover:text-primary hover:scale-105 transition-transform duration-200"> Products </a>
+                    <a href="/contact" className="block lg:inline-block px-4 py-2 text-base lg:text-lg hover:text-primary hover:scale-105 transition-transform duration-200"> Contact Us </a>
                 </div>
 
                 {/* Icons */}
-                <div className="hidden lg:flex items-center space-x-4">
+                <div className="hidden lg:flex items-center space-x-4 relative">
                     <a href="#" className="text-gray-600 hover:text-primary"><FaSearch /></a>
-                    <a href="#" className="text-gray-600 hover:text-primary"><FaUser /></a>
                     <a href="#" className="text-gray-600 hover:text-primary"><FaShoppingBag /></a>
+
+                    {/* User Dropdown */}
+                    <div className="relative">
+                        <button onClick={() => setUserDropdownOpen(!userDropdownOpen)} className="text-gray-600 hover:text-primary">
+                            <FaUser className="text-xl" />
+                        </button>
+
+                        {userDropdownOpen && (
+                            <div className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-lg py-2">
+                                {isLoggedIn ? (
+                                    <>
+                                        {/* <button onClick={() => navigate("/profile")} className="block px-4 py-2 text-gray-700 hover:bg-gray-200 w-full text-left">
+                                            Trang cá nhân
+                                        </button> */}
+                                        <button onClick={handleLogout} className="block px-4 py-2 text-red-600 hover:bg-gray-200 w-full text-left">
+                                            Đăng xuất
+                                        </button>
+                                    </>
+                                ) : (
+                                    <>
+                                        <button onClick={() => navigate("/login")} className="block px-4 py-2 text-gray-700 hover:bg-gray-200 w-full text-left">
+                                            Đăng nhập
+                                        </button>
+                                    </>
+                                )}
+                            </div>
+                        )}
+                    </div>
                 </div>
             </nav>
         </div>
