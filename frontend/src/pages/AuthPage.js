@@ -37,7 +37,7 @@ export default function AuthPage() {
                 });
 
                 localStorage.setItem("token", response.data.token);
-                localStorage.setItem("role", response.data.role); // Lưu quyền user
+                localStorage.setItem("role", response.data.data.user.role.name); // Lưu quyền user
                 alert("Login successful!");
                 navigate("/"); // Điều hướng về dashboard sau khi login
             } else {

@@ -51,7 +51,7 @@ module.exports = {
         }else{
             console.log(bcrypt.compareSync(password,user.password));
             if(bcrypt.compareSync(password,user.password)){
-                return user;
+                return user.populate({ path: "role", select: "name" });
             }else{
                 throw new Error("username hoac mat khau khong dung")
             }
