@@ -9,7 +9,7 @@ const CreateProductForm = () => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
     const { categories, loading: loadingCategories } = useCategories();
     const { producers, loading: loadingProducers } = useProducers();
-    const navigate = useNavigate();  // ✅ Khai báo navigate
+    const navigate = useNavigate();  // Khai báo navigate
 
     const onSubmit = async (data) => {
         try {
@@ -44,7 +44,7 @@ const CreateProductForm = () => {
 
             reset();  // Reset form sau khi gửi thành công
             
-            navigate("/");  // ✅ Chuyển hướng về trang chủ
+            navigate("/");  // Chuyển hướng về trang chủ
         } catch (error) {
             console.error("Error creating product:", error);
             alert("Failed to create product!");

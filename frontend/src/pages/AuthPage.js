@@ -9,9 +9,7 @@ export default function AuthPage() {
         username: "",
         email: "",
         password: "",
-        fullName: "",
-        avatarUrl: "",
-        role: ""
+        fullName: ""
     });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
@@ -56,9 +54,9 @@ export default function AuthPage() {
             }
 
             // Reset form sau khi đăng nhập/đăng ký thành công
-            setFormData({ username: "", email: "", password: "", fullName: "", avatarUrl: "", role: "" });
+            setFormData({ username: "", email: "", password: "", fullName: ""});
         } catch (err) {
-            console.error("❌ Auth Error:", err.response?.data);  
+            console.error("Auth Error:", err.response?.data);  
             setError(err.response?.data?.message || "An unexpected error occurred.");
         }
 
@@ -108,23 +106,6 @@ export default function AuthPage() {
                                 onChange={handleChange}
                                 placeholder="Full Name"
                                 className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            />
-                            <input
-                                type="text"
-                                name="avatarUrl"
-                                value={formData.avatarUrl}
-                                onChange={handleChange}
-                                placeholder="Avatar URL"
-                                className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            />
-                            <input
-                                type="text"
-                                name="role"
-                                value={formData.role}
-                                onChange={handleChange}
-                                placeholder="Role (e.g., user, admin)"
-                                className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                required
                             />
                         </>
                     )}

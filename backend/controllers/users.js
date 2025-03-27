@@ -9,13 +9,14 @@ module.exports = {
     GetUserById: async (id) => {
         return await userSchema.findById(id).populate('role');
     },
-    CreateAnUser: async (username, password, email, role) => {
+    CreateAnUser: async (username, password, email, fullName, role) => {
         let GetRole = await roleController.GetRoleByName(role);
         if (GetRole) {
             newUser = new userSchema({
                 username: username,
                 password: password,
                 email: email,
+                fullName: fullName,
                 role: GetRole._id
             })
             return await newUser.save();

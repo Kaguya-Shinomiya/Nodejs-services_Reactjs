@@ -17,9 +17,6 @@ let userSchema = new mongoose.Schema({
     },fullName:{
         type:String,
         default:"",
-    },avatarUrl:{
-        type:String,
-        default:""
     },status:{
         type:Boolean,
         default:false

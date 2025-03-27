@@ -34,7 +34,7 @@ router.post('/login', async function (req, res, next) {
 router.post('/signup', async function (req, res, next) {
     try {
         
-        let { username, password, email } = req.body;
+        let { username, password, email, fullName } = req.body;
 
         // Kiểm tra username & email đã tồn tại chưa
         let existingUser = await userController.FindUser(username, email);
@@ -43,7 +43,7 @@ router.post('/signup', async function (req, res, next) {
         }
 
         
-        let result = await userController.CreateAnUser(username, password, email, 'user');
+        let result = await userController.CreateAnUser(username, password, email,fullName, 'user');
 
         let token = jwt.sign({
             id: result._id,
