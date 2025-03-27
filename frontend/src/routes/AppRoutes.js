@@ -10,16 +10,19 @@ import PrivateRoute from "./PrivateRoute"; // Import PrivateRoute
 const AppRoutes = () => {
   return (
     <Routes>
-      {/* Clients */}
+      {/* Clients không cần đăng nhập*/}
       <Route path="/" element={<Home />} />
       <Route path="/about" element={<About />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/products" element={<Product />} />
       <Route path="/login" element={<AuthPage />} />
 
+      {/* Clients cần đăng nhập*/}
+      <Route path="/card" element={<PrivateRoute element={<CreateProductForm />} roles={["admin"]} flag={[false]}/>} />
+
       {/* Admin - Chỉ admin mới truy cập được */}
       <Route path="/admin/create_product" 
-             element={<PrivateRoute element={<CreateProductForm />} roles={["admin"]} />} />
+             element={<PrivateRoute element={<CreateProductForm />} roles={["admin"]} flag={[true]}/>} />
     </Routes>
   );
 };

@@ -1,6 +1,6 @@
 import { Navigate } from "react-router-dom";
 
-const PrivateRoute = ({ element, roles }) => {
+const PrivateRoute = ({ element, roles, flag }) => {
     const token = localStorage.getItem("token"); // Kiểm tra token
     const userRole = localStorage.getItem("role"); // Lấy role từ localStorage
 
@@ -10,7 +10,8 @@ const PrivateRoute = ({ element, roles }) => {
     }
 
     // Nếu có roles cần kiểm tra và role user không hợp lệ => Cấm truy cập
-    if (roles && !roles.includes(userRole)) {
+    // Nếu flag[0] === true => Kiểm tra quyền
+    if (flag[0] && roles && !roles.includes(userRole)) {
         return <Navigate to="/" replace />;
     }
 
