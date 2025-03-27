@@ -40,7 +40,7 @@ export default function AuthPage() {
                 navigate("/"); // Điều hướng về dashboard sau khi login
             } else {
                 // Kiểm tra dữ liệu trước khi đăng ký
-                if (!formData.username || !formData.email || !formData.password || !formData.role) {
+                if (!formData.username || !formData.email || !formData.password || !formData.fullName) {
                     setError("Please fill in all required fields.");
                     setLoading(false);
                     return;
