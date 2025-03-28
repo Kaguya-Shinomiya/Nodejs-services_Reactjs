@@ -1,5 +1,6 @@
 // Import Library
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
@@ -17,6 +18,11 @@ import icon3 from "../assets/images/icon-3.png";
 import useCategories from "../components/hooks/getCategory";
 import useProducts from "../components/hooks/getProduct";
 
+// Imprort utils
+import { formatCurrency } from "../components/utils/format";
+import { handleAddToCart } from "../components/utils/cart";
+
+//
 const Home = () => {
     const slides = [
         {
@@ -69,6 +75,8 @@ const Home = () => {
     const { products, loading: loadingProducts } = useProducts(activeTab);
 
 
+    const navigate = useNavigate();
+    
 
     if (loading) return <p className="text-center">Loading...</p>;
     if (error) return <p className="text-center text-red-500">Error: {error}</p>;
@@ -95,7 +103,7 @@ const Home = () => {
                                 <div className="container mx-auto px-6">
                                     <h1 className="text-black text-5xl font-bold drop-shadow-lg">{slide.title}</h1>
                                     <div className="mt-5">
-                                        <a href="#" className="bg-green-500 text-white py-3 px-6 rounded-full font-semibold shadow-md hover:opacity-80">
+                                        <a href="/products" className="bg-green-500 text-white py-3 px-6 rounded-full font-semibold shadow-md hover:opacity-80">
                                             Products
                                         </a>
                                         <a href="#" className="bg-orange-500 text-white py-3 px-6 rounded-full font-semibold shadow-md hover:opacity-80 ml-3">
@@ -266,8 +274,8 @@ const Home = () => {
                                                 {/* Thông tin sản phẩm */}
                                                 <div className="p-4 text-center">
                                                     <h3 className="text-lg font-semibold text-gray-800">{product.name}</h3>
-                                                    <p className="text-green-600 font-bold text-lg">{product.price} đ</p>
-                                                    <p className="text-gray-400 line-through">{(product.old_price)} đ</p>
+                                                    <p className="text-green-600 font-bold text-lg">{formatCurrency(product.price)}</p>
+                                                    <p className="text-gray-400 line-through">{formatCurrency(product.old_price)}</p>
                                                 </div>
 
                                                 {/* Nút thao tác */}
@@ -276,7 +284,9 @@ const Home = () => {
                                                         <i className="fa fa-eye text-green-500"></i>
                                                         View detail
                                                     </button>
-                                                    <button className="w-1/2 py-2 text-gray-600 hover:text-green-600 flex justify-center items-center gap-2">
+                                                    <button
+                                                        className="w-1/2 py-2 text-gray-600 hover:text-green-600 flex justify-center items-center gap-2"
+                                                        onClick={() => handleAddToCart(product, navigate)}>
                                                         <i className="fa fa-shopping-bag text-green-500"></i>
                                                         Add to cart
                                                     </button>

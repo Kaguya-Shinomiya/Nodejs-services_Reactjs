@@ -1,61 +1,33 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";  // ✅ Import useNavigate
+import { useNavigate } from "react-router-dom";
 import useCategories from "../../components/hooks/getCategory";
 import useProducers from "../../components/hooks/getProducer";
-import axios from "axios";
+import useCreateProduct from "../../components/hooks/createProduct";
 
 const CreateProductForm = () => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
     const { categories, loading: loadingCategories } = useCategories();
     const { producers, loading: loadingProducers } = useProducers();
-    const navigate = useNavigate();  // Khai báo navigate
+    const { createProduct, loading } = useCreateProduct();
+    const navigate = useNavigate();
 
     const onSubmit = async (data) => {
         try {
-            const formData = new FormData();
-            formData.append("productName", data.productName);
-            formData.append("price", data.price);
-            formData.append("old_price", data.old_price);
-            formData.append("description", data.description || "");
-            formData.append("categoryId", data.categoryId);
-            formData.append("producerId", data.producerId);
-            formData.append("stockQuantity", data.stockQuantity);
-            formData.append("isPreOrder", data.isPreOrder);
-            formData.append("releaseDate", data.releaseDate || "");
-            formData.append("isNew", data.isNew);
-            formData.append("rating", data.rating);
-            formData.append("sold", data.sold);
-
-            if (data.imageUrl.length > 0) {
-                for (let i = 0; i < data.imageUrl.length; i++) {
-                    formData.append("images", data.imageUrl[i]);
-                }
-            }
-
-            const response = await axios.post("http://127.0.0.1:5000/products", formData, {
-                headers: {
-                    "Content-Type": "multipart/form-data",
-                },
-            });
-
-            console.log("Product created:", response.data);
+            await createProduct(data);
             alert("Product created successfully!");
-
-            reset();  // Reset form sau khi gửi thành công
-            
-            navigate("/");  // Chuyển hướng về trang chủ
+            reset();
+            navigate("/");
         } catch (error) {
-            console.error("Error creating product:", error);
             alert("Failed to create product!");
         }
     };
 
     return (
         <>
-            <br></br>
+            <br />
             <h1 className="text-3xl font-bold text-center text-blue-500">Trang thêm sản phẩm</h1>
-            <br></br>
+            <br />
 
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                 <input {...register("productName", { required: true, maxLength: 100 })} className="w-full p-2 border rounded" placeholder="Product Name" />
@@ -109,7 +81,9 @@ const CreateProductForm = () => {
 
                 <input type="number" {...register("sold", { min: 0 })} className="w-full p-2 border rounded" placeholder="Sold" />
 
-                <button type="submit" className="w-full p-2 bg-blue-500 text-white rounded">Create Product</button>
+                <button type="submit" className="w-full p-2 bg-blue-500 text-white rounded" disabled={loading}>
+                    {loading ? "Creating..." : "Create Product"}
+                </button>
             </form>
         </>
     );
