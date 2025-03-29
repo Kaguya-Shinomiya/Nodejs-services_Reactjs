@@ -1,19 +1,50 @@
 import { Navigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
-const PrivateRoute = ({ element, roles, flag }) => {
-    const token = localStorage.getItem("token"); // Kiểm tra token
-    const userRole = localStorage.getItem("role"); // Lấy role từ localStorage
+const PrivateRoute = ({ element, roles }) => {
+    const [isAuthorized, setIsAuthorized] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const token = localStorage.getItem("token");
 
-    // Nếu không có token => Chuyển hướng về trang login
-    if (!token) {
-        return <Navigate to="/login" replace />;
-    }
+    useEffect(() => {
+        const checkRole = async () => {
+            if (!token) {
+                setIsAuthorized(false);
+                setLoading(false);
+                return;
+            }
 
-    // Nếu có roles cần kiểm tra và role user không hợp lệ => Cấm truy cập
-    // Nếu flag[0] === true => Kiểm tra quyền
-    if (flag[0] && roles && !roles.includes(userRole)) {
-        return <Navigate to="/" replace />;
-    }
+            try {
+                //console.log("Đây là token: " + token)
+                const response = await axios.get("http://127.0.0.1:5000/auth/check-role", {
+                    headers: { 
+                        "Authorization": `Bearer ${token}`,
+                        "Content-Type": "application/json"
+                    },
+
+                });
+
+                //console.log("Check Role Response:", response.data);
+                //console.log("Đây là role heheehee: "+ response.data.role)
+                if (roles.includes(response.data.role)) {
+                    setIsAuthorized(true);
+                } else {
+                    setIsAuthorized(false);
+                }
+            } catch (error) {
+                console.error("Role Check Error:", error);
+                setIsAuthorized(false);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        checkRole();
+    }, [token, roles]);
+
+    if (loading) return <p>Loading...</p>;
+    if (!isAuthorized) return <Navigate to="/" replace />;
 
     return element;
 };

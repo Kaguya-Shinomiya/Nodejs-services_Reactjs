@@ -3,7 +3,6 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 export default function AuthPage() {
-    
     const [isLogin, setIsLogin] = useState(true);
     const [formData, setFormData] = useState({
         username: "",
@@ -13,7 +12,7 @@ export default function AuthPage() {
     });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
-    
+
     const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -28,16 +27,35 @@ export default function AuthPage() {
         try {
             let response;
             if (isLogin) {
-                // Xác thực đăng nhập
+                // Gửi request đăng nhập
                 response = await axios.post("http://127.0.0.1:5000/auth/login", {
                     email: formData.email,
                     password: formData.password
                 });
 
-                localStorage.setItem("token", response.data.token);
-                localStorage.setItem("role", response.data.data.user.role.name); // Lưu quyền user
+                console.log("Login Response:", response.data);
+
+                // Kiểm tra xem API có trả về token và role không
+                if (!response.data.data.token ) {
+                    throw new Error("Login failed: Missing token.");
+                }
+
+                if (!response.data.data?.user?.role?.name) {
+                    throw new Error("Login failed: Missing role.");
+                }
+
+                // Lưu token và role vào localStorage
+                localStorage.setItem("token", response.data.data.token);
+                localStorage.setItem("role", response.data.data.user.role.name);
+
                 alert("Login successful!");
-                navigate("/"); // Điều hướng về dashboard sau khi login
+
+                // Điều hướng dựa trên role của user
+                if (response.data.data.user.role.name === "admin") {
+                    navigate("/admin/admin_dashboard");
+                } else {
+                    navigate("/");
+                }
             } else {
                 // Kiểm tra dữ liệu trước khi đăng ký
                 if (!formData.username || !formData.email || !formData.password || !formData.fullName) {
@@ -48,15 +66,15 @@ export default function AuthPage() {
 
                 // Gửi yêu cầu đăng ký
                 response = await axios.post("http://127.0.0.1:5000/auth/signup", formData);
-
-                alert(" Registration successful! Please log in.");
+                alert("Registration successful! Please log in.");
                 setIsLogin(true);
             }
 
             // Reset form sau khi đăng nhập/đăng ký thành công
-            setFormData({ username: "", email: "", password: "", fullName: ""});
+            setFormData({ username: "", email: "", password: "", fullName: "" });
+
         } catch (err) {
-            console.error("Auth Error:", err.response?.data);  
+            console.error("Auth Error:", err.response?.data || err.message);
             setError(err.response?.data?.message || "An unexpected error occurred.");
         }
 
