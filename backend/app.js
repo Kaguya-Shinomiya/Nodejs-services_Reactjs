@@ -9,6 +9,7 @@ const fileUpload = require('express-fileupload');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var {CreateErrorRes} = require('./utils/ResHandler')
 
 
 var app = express();
@@ -56,8 +57,7 @@ app.use(function(err, req, res, next) {
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
   // render the error page
-  res.status(err.status || 500);
-  res.send('error');
+  CreateErrorRes(res,err.status||500,err)
 });
 
 const port = 5000

@@ -31,9 +31,9 @@ router.post('/login', async function (req, res, next) {
 
         return CreateSuccessRes(res, 200, { token, user: result });
     } catch (error) {
-        //next(error);
-        //console.log("đã bị lỗi ở dong 35 file auth.js")
-        return res.status(500).json({ message: error.message});
+        next(error);
+        // console.log("đã bị lỗi ở file auth.js")
+        //return res.status(500).json({ message: error.message});
     }
 });
 
