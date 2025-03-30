@@ -25,7 +25,7 @@ router.post('/login', async function (req, res, next) {
                 role: result.role.name, // Chỉ lấy tên role thay vì object
                 exp: Math.floor(Date.now() / 1000) + 86400 // Dùng 'exp' theo chuẩn JWT
             },
-            constants.SECRET_KEY// Đảm bảo key đồng nhất
+            process.env.JWT_SECRET// Đảm bảo key đồng nhất
         );
 
 

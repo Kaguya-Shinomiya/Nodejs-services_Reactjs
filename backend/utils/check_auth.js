@@ -1,5 +1,6 @@
+require('dotenv').config();
 let jwt = require('jsonwebtoken')
-let constants = require('../utils/constants')
+//let constants = require('../utils/constants')
 let userController = require('../controllers/users')
 module.exports = {
     check_authentication: async function (req, res, next) {
@@ -9,7 +10,7 @@ module.exports = {
         let authorization = req.headers.authorization;
         if (authorization.startsWith("Bearer")) {
             let token = authorization.split(" ")[1];
-            let result = jwt.verify(token, constants.SECRET_KEY);
+            let result = jwt.verify(token, process.env.JWT_SECRET);
             if (result) {
                 let id = result.id;
                 let user = await userController.GetUserById(id);
