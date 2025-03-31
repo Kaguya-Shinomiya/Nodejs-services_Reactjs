@@ -3,7 +3,6 @@ var router = express.Router();
 let userController = require('../controllers/users');
 var { CreateSuccessRes, CreateErrorRes } = require('../utils/ResHandler');
 let jwt = require('jsonwebtoken');
-let constants = require('../utils/constants');
 let { check_authentication } = require('../utils/check_auth');
 let bcrypt = require('bcrypt');
 let authMiddleware = require("../utils/authMiddleware");
@@ -25,7 +24,7 @@ router.post('/login', async function (req, res, next) {
                 role: result.role.name, // Chỉ lấy tên role thay vì object
                 exp: Math.floor(Date.now() / 1000) + 86400 // Dùng 'exp' theo chuẩn JWT
             },
-            constants.SECRET_KEY// Đảm bảo key đồng nhất
+            process.env.JWT_SECRET// Đảm bảo key đồng nhất
         );
 
 
@@ -55,7 +54,7 @@ router.post('/signup', async function (req, res, next) {
         let token = jwt.sign({
             id: result._id,
             expire: Math.floor(Date.now() / 1000) + 86400
-        }, constants.SECRET_KEY);
+        }, process.env.JWT_SECRET);
 
         return CreateSuccessRes(res, 200, { token, user: result });
     } catch (error) {
