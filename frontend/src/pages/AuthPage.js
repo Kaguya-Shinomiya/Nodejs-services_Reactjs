@@ -52,9 +52,9 @@ export default function AuthPage() {
 
                 // Điều hướng dựa trên role của user
                 if (response.data.data.user.role.name === "admin") {
-                    navigate("/admin/admin_dashboard");
+                    window.location.href = "/admin/admin_dashboard";
                 } else {
-                    navigate("/");
+                    window.location.href = "/";
                 }
             } else {
                 // Kiểm tra dữ liệu trước khi đăng ký

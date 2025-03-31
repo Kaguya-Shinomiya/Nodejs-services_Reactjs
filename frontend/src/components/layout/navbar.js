@@ -26,7 +26,8 @@ const Navbar = () => {
     }, []);
 
     const handleLogout = () => {
-        localStorage.removeItem("token");
+        //localStorage.removeItem("token");
+        localStorage.clear();
         setIsLoggedIn(false);
         navigate("/");
         window.location.reload(); // Reload để cập nhật UI
@@ -37,8 +38,8 @@ const Navbar = () => {
             {/* Top Bar */}
             <div className={`hidden lg:flex justify-between items-center px-10 py-2 transition-all duration-300 ${isScrolled ? "opacity-0 h-0 overflow-hidden" : "opacity-100 h-auto"}`}>
                 <div className="text-sm text-gray-600">
-                    <span className="mr-4"><i className="fa fa-map-marker-alt"></i> 123 Street, New York, USA</span>
-                    <span><i className="fa fa-envelope"></i> info@example.com</span>
+                    <span className="mr-4">📍 123 Street, New York, USA</span>
+                    <span>✉ info@example.com</span>
                 </div>
                 <div className="flex items-center space-x-3 text-gray-600">
                     <span>Follow us:</span>
@@ -71,7 +72,11 @@ const Navbar = () => {
                 {/* Icons */}
                 <div className="hidden lg:flex items-center space-x-4 relative">
                     <a href="#" className="text-gray-600 hover:text-primary"><FaSearch /></a>
-                    <a href="#" className="text-gray-600 hover:text-primary"><FaShoppingBag /></a>
+                    <button
+                        className="text-gray-600 hover:text-primary"
+                        onClick={() => navigate("/cart")}>
+                        <FaShoppingBag />
+                    </button>
 
                     {/* User Dropdown */}
                     <div className="relative">
@@ -83,16 +88,19 @@ const Navbar = () => {
                             <div className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-lg py-2">
                                 {isLoggedIn ? (
                                     <>
-                                        {/* <button onClick={() => navigate("/profile")} className="block px-4 py-2 text-gray-700 hover:bg-gray-200 w-full text-left">
-                                            Trang cá nhân
-                                        </button> */}
                                         <button onClick={handleLogout} className="block px-4 py-2 text-red-600 hover:bg-gray-200 w-full text-left">
                                             Đăng xuất
                                         </button>
                                     </>
                                 ) : (
                                     <>
-                                        <button onClick={() => navigate("/login")} className="block px-4 py-2 text-gray-700 hover:bg-gray-200 w-full text-left">
+                                        <button
+                                            onClick={() => {
+                                                setUserDropdownOpen(false); // Đóng dropdown
+                                                navigate("/login"); // Chuyển hướng đến trang đăng nhập
+                                            }}
+                                            className="block px-4 py-2 text-gray-700 hover:bg-gray-200 w-full text-left"
+                                        >
                                             Đăng nhập
                                         </button>
                                     </>
