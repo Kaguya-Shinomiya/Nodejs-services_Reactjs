@@ -6,6 +6,7 @@ import Product from "../pages/Product";
 import AuthPage from "../pages/AuthPage";
 import PrivateRoute from "./PrivateRoute"; // Import PrivateRoute
 import Cart from "../pages/Cart";
+import ProductDetail from "../pages/Product_Detail";
 
 
 import CreateProductForm from "../pages/Admin/Create_Product";
@@ -20,16 +21,16 @@ const AppRoutes = () => {
       <Route path="/contact" element={<Contact />} />
       <Route path="/products" element={<Product />} />
       <Route path="/login" element={<AuthPage />} />
+      <Route path="/product_detail/:id" element={< ProductDetail />} />
 
       {/* Clients cần đăng nhập*/}
-      {/* <Route path="/card" element={<PrivateRoute element={<CreateProductForm />} />} /> */}
       <Route path="/cart" element={<Cart />} />
 
       {/* Admin - Chỉ admin mới truy cập được */}
-      <Route path="/admin/admin_dashboard" 
-             element={<PrivateRoute element={<Admin_Dashboard />} roles={["admin"]} />} />
-      <Route path="/admin/create_product" 
-             element={<PrivateRoute element={<CreateProductForm />} roles={["admin"]} />} />
+      <Route path="/admin/admin_dashboard"
+        element={<PrivateRoute element={<Admin_Dashboard />} roles={["admin"]} />} />
+      <Route path="/admin/create_product"
+        element={<PrivateRoute element={<CreateProductForm />} roles={["admin"]} />} />
     </Routes>
   );
 };

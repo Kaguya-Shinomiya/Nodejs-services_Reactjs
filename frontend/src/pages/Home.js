@@ -76,7 +76,7 @@ const Home = () => {
 
 
     const navigate = useNavigate();
-    
+
 
     if (loading) return <p className="text-center">Loading...</p>;
     if (error) return <p className="text-center text-red-500">Error: {error}</p>;
@@ -280,7 +280,9 @@ const Home = () => {
 
                                                 {/* Nút thao tác */}
                                                 <div className="flex border-t border-gray-200">
-                                                    <button className="w-1/2 py-2 text-gray-600 hover:text-green-600 flex justify-center items-center gap-2 border-r">
+                                                    <button
+                                                        className="w-1/2 py-2 text-gray-600 hover:text-green-600 flex justify-center items-center gap-2 border-r"
+                                                        onClick={() => navigate(`/product_detail/${product._id}`)}>
                                                         <i className="fa fa-eye text-green-500"></i>
                                                         View detail
                                                     </button>

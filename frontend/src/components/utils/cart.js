@@ -16,7 +16,7 @@ export const addToCart = (product) => {
 };
 
 
-export const handleAddToCart = (product, navigate) => {
+export const handleAddToCart = (product, navigate, num = 1) => {
     const isAuthenticated = localStorage.getItem("token"); // Kiểm tra đăng nhập
 
     if (!isAuthenticated) {
@@ -24,7 +24,12 @@ export const handleAddToCart = (product, navigate) => {
         navigate("/login"); // Chuyển hướng sang trang login
         return;
     }
-
-    addToCart(product);
+    let i = 0;
+    while (i < num) {
+        //console.log(i);
+        addToCart(product);
+        i++;
+    }
+    
     alert("Đã thêm vào giỏ hàng!");
 };
