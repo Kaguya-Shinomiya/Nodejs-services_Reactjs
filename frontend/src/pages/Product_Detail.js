@@ -1,40 +1,16 @@
-import { useState, useEffect } from "react";
-import { useParams,  useNavigate} from "react-router-dom";
-import axios from "axios";
+import { useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import useFetchProduct from "../components/hooks/getProductByID"; // Import custom hook
 import { handleAddToCart } from "../components/utils/cart";
-
 
 const ProductDetail = () => {
   const { id } = useParams(); // Lấy ID sản phẩm từ URL
-  const [product, setProduct] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const { product, loading, selectedImage, setSelectedImage } = useFetchProduct(id);
   const [quantity, setQuantity] = useState(1);
-  const [selectedImage, setSelectedImage] = useState(""); // Ảnh đang hiển thị
-
-  useEffect(() => {
-    const fetchProduct = async () => {
-      try {
-        const response = await axios.get(`http://localhost:5000/products/${id}`);
-        const productData = response.data.data;
-
-        setProduct(productData);
-        setSelectedImage(`http://localhost:5000/${productData.imageUrl}`); // Ảnh chính
-        setLoading(false);
-      } catch (error) {
-        console.error("Lỗi khi tải sản phẩm:", error);
-        setLoading(false);
-      }
-    };
-
-    fetchProduct();
-  }, [id]);
-
   const navigate = useNavigate();
-  
+
   if (loading) return <div className="text-center text-xl mt-10">Đang tải...</div>;
   if (!product) return <div className="text-center text-xl mt-10 text-red-500">Không tìm thấy sản phẩm</div>;
-
-  
 
   return (
     <div className="container mx-auto p-6">
