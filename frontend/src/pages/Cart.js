@@ -8,7 +8,7 @@ const Cart = () => {
 
   useEffect(() => {
     // Kiểm tra trạng thái đăng nhập
-    const user = JSON.parse(localStorage.getItem("user"));
+    const user = localStorage.getItem("token");
     if (!user) {
       alert("Bạn cần đăng nhập để xem giỏ hàng!");
       navigate("/login"); // Điều hướng đến trang đăng nhập

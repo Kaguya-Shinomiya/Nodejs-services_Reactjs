@@ -1,5 +1,6 @@
 // Import Library
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
@@ -12,6 +13,10 @@ import carousel2 from "../assets/images/carousel-2.jpg";
 // Import hooks
 import useCategories from "../components/hooks/getCategory";
 import useProducts from "../components/hooks/getProduct";
+
+// Imprort utils
+import { formatCurrency } from "../components/utils/format";
+import { handleAddToCart } from "../components/utils/cart";
 
 
 const Product = () => {
@@ -42,6 +47,7 @@ const Product = () => {
     // Get Product from active Tab
     const { products, loading: loadingProducts } = useProducts(activeTab);
 
+    const navigate = useNavigate();
 
 
     if (loading) return <p className="text-center">Loading...</p>;
@@ -138,7 +144,7 @@ const Product = () => {
                                                     <img
                                                         className="w-full h-48 object-cover transition-transform duration-300 transform hover:scale-105"
                                                         src={`http://127.0.0.1:5000/${product.imageUrl}`}
-                                                        alt={product.name}
+                                                        alt={product.productName}
                                                     />
                                                     <div className="absolute top-4 left-4 bg-green-500 text-white text-xs font-semibold px-3 py-1 rounded">
                                                         New
@@ -147,18 +153,22 @@ const Product = () => {
 
                                                 {/* Thông tin sản phẩm */}
                                                 <div className="p-4 text-center">
-                                                    <h3 className="text-lg font-semibold text-gray-800">{product.name}</h3>
-                                                    <p className="text-green-600 font-bold text-lg">{product.price} đ</p>
-                                                    <p className="text-gray-400 line-through">{(product.old_price)} đ</p>
+                                                    <h3 className="text-lg font-semibold text-gray-800">{product.productName}</h3>
+                                                    <p className="text-green-600 font-bold text-lg">{formatCurrency(product.price)}</p>
+                                                    <p className="text-gray-400 line-through">{formatCurrency(product.old_price)}</p>
                                                 </div>
 
                                                 {/* Nút thao tác */}
                                                 <div className="flex border-t border-gray-200">
-                                                    <button className="w-1/2 py-2 text-gray-600 hover:text-green-600 flex justify-center items-center gap-2 border-r">
+                                                    <button
+                                                        className="w-1/2 py-2 text-gray-600 hover:text-green-600 flex justify-center items-center gap-2 border-r"
+                                                        onClick={() => navigate(`/product_detail/${product._id}`)}>
                                                         <i className="fa fa-eye text-green-500"></i>
                                                         View detail
                                                     </button>
-                                                    <button className="w-1/2 py-2 text-gray-600 hover:text-green-600 flex justify-center items-center gap-2">
+                                                    <button
+                                                        className="w-1/2 py-2 text-gray-600 hover:text-green-600 flex justify-center items-center gap-2"
+                                                        onClick={() => handleAddToCart(product, navigate)}>
                                                         <i className="fa fa-shopping-bag text-green-500"></i>
                                                         Add to cart
                                                     </button>

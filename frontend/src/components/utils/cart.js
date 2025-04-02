@@ -4,7 +4,7 @@ export const getCart = () => {
 
 export const addToCart = (product) => {
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
-    let existingItem = cart.find((item) => item.id === product.id);
+    let existingItem = cart.find((item) => item._id === product._id);
 
     if (existingItem) {
         existingItem.quantity = (existingItem.quantity || 1) + 1;
@@ -18,7 +18,7 @@ export const addToCart = (product) => {
 
 export const handleAddToCart = (product, navigate, num = 1) => {
     const isAuthenticated = localStorage.getItem("token"); // Kiểm tra đăng nhập
-
+    console.log(product)
     if (!isAuthenticated) {
         alert("Bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng!");
         navigate("/login"); // Chuyển hướng sang trang login

@@ -264,7 +264,7 @@ const Home = () => {
                                                     <img
                                                         className="w-full h-48 object-cover transition-transform duration-300 transform hover:scale-105"
                                                         src={`http://127.0.0.1:5000/${product.imageUrl}`}
-                                                        alt={product.name}
+                                                        alt={product.productName}
                                                     />
                                                     <div className="absolute top-4 left-4 bg-green-500 text-white text-xs font-semibold px-3 py-1 rounded">
                                                         New
@@ -273,7 +273,7 @@ const Home = () => {
 
                                                 {/* Thông tin sản phẩm */}
                                                 <div className="p-4 text-center">
-                                                    <h3 className="text-lg font-semibold text-gray-800">{product.name}</h3>
+                                                    <h3 className="text-lg font-semibold text-gray-800">{product.productName}</h3>
                                                     <p className="text-green-600 font-bold text-lg">{formatCurrency(product.price)}</p>
                                                     <p className="text-gray-400 line-through">{formatCurrency(product.old_price)}</p>
                                                 </div>
