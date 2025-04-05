@@ -6,6 +6,8 @@ var logger = require('morgan');
 var mongoose = require('mongoose');
 const cors = require("cors")
 const fileUpload = require('express-fileupload');
+const log_admin = require('./utils/logger');
+const cleanOldLogs = require('./utils/cleanOldLogs');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -34,6 +36,8 @@ app.use('/roles', require('./routes/roles'));
 app.use('/categories', require('./routes/categories'));
 app.use('/products', require('./routes/products'));
 app.use('/producers', require('./routes/producers'));
+app.use('/logs', require('./routes/logs'));
+
 
 
 
@@ -60,10 +64,16 @@ app.use(function(err, req, res, next) {
   CreateErrorRes(res,err.status||500,err)
 });
 
+setInterval(() => {
+  cleanOldLogs();
+}, 12 * 60 * 60 * 1000); 
+
 const port = 5000
 const host = "127.0.0.1"
 app.listen(port, host, () => {
-    console.log(`Server running at http://${host}:${port}`)
+    console.log(`Server running at http://${host}:${port}`);
+
+    log_admin.info(`Server running at http://${host}:${port}`);
 })
 
 module.exports = app;
