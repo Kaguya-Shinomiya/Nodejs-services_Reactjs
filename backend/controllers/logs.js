@@ -6,6 +6,9 @@ module.exports = {
         return await logSchema.find({});
     },
 
+    GetLogByID: async (id) => {
+        return await logSchema.findById(id);
+    },
 
     GetLogByName: async (name) => {
         return await logSchema.findOne({ name: name });

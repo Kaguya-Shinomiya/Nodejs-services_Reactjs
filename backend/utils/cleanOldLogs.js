@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const moment = require('moment');
 const logController = require('../controllers/logs');
-const log_admin = require('./utils/logger');
+const log_admin = require('./logger');
 
 const auditPath = path.join(__dirname, '../logs/.dc381d7a01bc34639481918e592d592acd8b0184-audit.json');
 const logFolder = path.join(__dirname, '../logs');

@@ -29,7 +29,7 @@ router.post('/', check_authentication,check_authorization(constants.ADMIN_PERMIS
 
 router.put('/:id', check_authentication,check_authorization(constants.ADMIN_PERMISSION), async function(req, res, next) {
   try {
-    let newRole = await roleController.UpdateRole(req.body.name);
+    let newRole = await roleController.UpdateRole(req.body.id,req.body.name);
     CreateSuccessRes(res,200,newRole);
   } catch (error) {
     next(error);

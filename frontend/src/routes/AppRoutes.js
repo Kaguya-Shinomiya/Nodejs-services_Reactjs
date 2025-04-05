@@ -8,8 +8,9 @@ import PrivateRoute from "./PrivateRoute"; // Import PrivateRoute
 import Cart from "../pages/Cart";
 import ProductDetail from "../pages/Product_Detail";
 
-
+import ShowProductFrom from "../pages/Admin/Show_Product";
 import CreateProductForm from "../pages/Admin/Create_Product";
+import EditProductForm from "../pages/Admin/Edit_Product";
 import Admin_Dashboard from "../pages/Admin/Admin_Dashboard";
 
 const AppRoutes = () => {
@@ -29,8 +30,16 @@ const AppRoutes = () => {
       {/* Admin - Chỉ admin mới truy cập được */}
       <Route path="/admin/admin_dashboard"
         element={<PrivateRoute element={<Admin_Dashboard />} roles={["admin"]} />} />
+
+      {/* Product */}  
+      <Route path="/admin/show_product"
+        element={<PrivateRoute element={<ShowProductFrom />} roles={["admin"]} />} />
       <Route path="/admin/create_product"
         element={<PrivateRoute element={<CreateProductForm />} roles={["admin"]} />} />
+      <Route path="/admin/edit_product/:id"
+        element={<PrivateRoute element={<EditProductForm />} roles={["admin"]} />} />
+      {/* <Route path="/admin/create_product"
+        element={<PrivateRoute element={<CreateProductForm />} roles={["admin"]} />} /> */}
     </Routes>
   );
 };

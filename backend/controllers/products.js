@@ -69,9 +69,9 @@ module.exports = {
 
             // Kiểm tra và xử lý ảnh (Chỉ hoạt động nếu có `req.files`)
             let imagePaths = [];
-            
+
             if (req.files && req.files.images) {
-                
+
                 const images = Array.isArray(req.files.images) ? req.files.images : [req.files.images];
 
                 for (let i = 0; i < images.length; i++) {
@@ -120,9 +120,114 @@ module.exports = {
         }
     },
 
-    UpdateProduct: async function (id, UpdateObj) {
-        if (UpdateObj.role) {
-            //
+    UpdateProduct: async function (id, req) {
+        const fs = require("fs");
+        const path = require("path");
+        const uploadDir = path.join(__dirname, "../public/images");
+
+        if (!fs.existsSync(uploadDir)) {
+            fs.mkdirSync(uploadDir, { recursive: true });
+        }
+
+        const body = req.body;
+
+        let product = await productSchema.findById(id);
+        if (!product) {
+            throw new Error(`Can't find product with id: ${id}`);
+        }
+
+        //console.log(product);
+        //console.log(body);
+
+        const categoryExists = await categorySchema.findById(body.categoryId);
+        if (!categoryExists) {
+            throw new Error("Category not found. Please provide a valid categoryId.");
+        }
+
+        const producerExists = await producerSchema.findById(body.producerId);
+        if (!producerExists) {
+            throw new Error("Producer not found. Please provide a valid producerId.");
+        }
+
+
+        let imagePaths = [];
+
+        if (req.files && req.files.images) {
+            const images = Array.isArray(req.files.images) ? req.files.images : [req.files.images];
+
+            for (const image of images) {
+                const fileName = `${Date.now()}_${image.name}`;
+                const filePath = path.join(uploadDir, fileName);
+                await image.mv(filePath);
+                imagePaths.push(`images/${fileName}`);
+            }
+        }
+
+        const allowedFields = [
+            'productName',
+            'price',
+            'old_price',
+            'description',
+            'categoryId',
+            'producerId',
+            'stockQuantity',
+            'isPreOrder',
+            'releaseDate',
+            'isNew',
+            'sold'
+        ];
+
+        const updateFields = {};
+
+        for (const key of allowedFields) {
+            if (body[key] !== undefined) {
+                updateFields[key] = body[key];
+            }
+        }
+
+        // Default values for some fields
+        updateFields.description = body.description || '';
+        updateFields.releaseDate = body.releaseDate || null;
+        updateFields.isNewProduct = body.isNew || false;
+        updateFields.sold = body.sold || 0;
+
+        if (imagePaths.length > 0) {
+            updateFields.imageUrl = imagePaths[0];
+        }
+
+        // Perform update
+        const updatedProduct = await productSchema.findByIdAndUpdate(
+            id,
+            { $set: updateFields },
+            { new: true }
+        );
+
+        console.log("typeof product.save:", typeof product.save); // function
+        //console.log("product instanceof mongoose.Model:", product instanceof mongoose.Model);
+        //const savedProduct = await product.save();
+        console.log('Product ID:', product._id);
+        console.log('Is New:', product.isNew);
+
+        if (imagePaths.length > 1) {
+            await product_ImageSchema.deleteMany({ productId: id });
+
+            const productImages = imagePaths.slice(1).map((url) => ({
+                productId: id,
+                imageUrl: url,
+            }));
+
+            await product_ImageSchema.insertMany(productImages);
+        }
+
+        return updatedProduct;
+    },
+    DeleteProduct: async (id) => {
+        let product = await productSchema.findById(id);
+        if (product) {
+            product.isDelete = true;
+            return await product.save();
+            //console.log("Tìm thấy")
         }
     }
+
 }

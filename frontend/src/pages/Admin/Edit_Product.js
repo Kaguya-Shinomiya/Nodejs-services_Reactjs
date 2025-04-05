@@ -1,32 +1,57 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useCategories from "../../components/hooks/getCategory";
 import useProducers from "../../components/hooks/getProducer";
-import useCreateProduct from "../../components/hooks/createProduct";
+import useUpdateProduct from "../../components/hooks/updateProduct";
+import useGetProductById from "../../components/hooks/getProductByID";
 
-const CreateProductForm = () => {
-    const { register, handleSubmit, formState: { errors }, reset } = useForm();
+const EditProductForm = () => {
+    const { id } = useParams(); // lấy id sản phẩm từ URL
+    const { register, handleSubmit, setValue, formState: { errors } } = useForm();
     const { categories, loading: loadingCategories } = useCategories();
     const { producers, loading: loadingProducers } = useProducers();
-    const { createProduct, loading } = useCreateProduct();
+    const { updateProduct, loading } = useUpdateProduct();
+    const { product, loading: loadingProduct } = useGetProductById(id);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (product) {
+            for (const key in product) {
+                if (product.hasOwnProperty(key)) {
+                    if (key === "categoryId" && product[key]?._id) {
+                        setValue("categoryId", product[key]._id);
+                    } else if (key === "producerId" && product[key]?._id) {
+                        setValue("producerId", product[key]._id);
+                    } else if (key === "releaseDate" && product[key]) {
+                        const dateStr = new Date(product[key]).toISOString().split("T")[0];
+                        setValue(key, dateStr);
+                    } else if (key === "isPreOrder" || key === "isNew") {
+                        setValue(key, !!product[key]);
+                    } else {
+                        setValue(key, product[key]);
+                    }
+                }
+            }
+        }
+    }, [product, setValue]);
 
     const onSubmit = async (data) => {
         try {
-            await createProduct(data);
-            alert("Product created successfully!");
-            reset();
+            await updateProduct(id, data);
+            alert("Product updated successfully!");
             navigate("/admin/show_product");
         } catch (error) {
-            alert("Failed to create product!");
+            alert("Failed to update product!");
         }
     };
+
+    if (loadingProduct) return <p>Loading product...</p>;
 
     return (
         <>
             <br />
-            <h1 className="text-3xl font-bold text-center text-blue-500">Trang thêm sản phẩm</h1>
+            <h1 className="text-3xl font-bold text-center text-green-500">Chỉnh sửa sản phẩm</h1>
             <br />
 
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -41,19 +66,20 @@ const CreateProductForm = () => {
 
                 <textarea {...register("description")} className="w-full p-2 border rounded" placeholder="Description"></textarea>
 
+                {/* Optional: for editing images */}
                 <input type="file" {...register("imageUrl")} multiple className="w-full p-2 border rounded" />
 
                 <select {...register("categoryId", { required: true })} className="w-full p-2 border rounded">
-                    <option value="">Select Category</option>
                     {loadingCategories ? <option>Loading...</option> :
                         categories.map(category => (
-                            <option key={category._id} value={category._id}>{category.name}</option>
+                            <option key={category._id} value={category._id}>
+                                {category.name}
+                            </option>
                         ))}
                 </select>
                 {errors.categoryId && <p className="text-red-500">Category is required</p>}
 
                 <select {...register("producerId", { required: true })} className="w-full p-2 border rounded">
-                    <option value="">Select Producer</option>
                     {loadingProducers ? <option>Loading...</option> :
                         producers.map(producer => (
                             <option key={producer._id} value={producer._id}>{producer.name}</option>
@@ -65,10 +91,9 @@ const CreateProductForm = () => {
                 {errors.stockQuantity && <p className="text-red-500">Stock quantity is required</p>}
 
                 <label className="flex items-center space-x-2">
-                    <input type="checkbox" {...register("isPreOrder", { required: true })} />
+                    <input type="checkbox" {...register("isPreOrder")} />
                     <span>Pre Order</span>
                 </label>
-                {errors.isPreOrder && <p className="text-red-500">Pre order selection is required</p>}
 
                 <input type="date" {...register("releaseDate")} className="w-full p-2 border rounded" />
 
@@ -81,12 +106,12 @@ const CreateProductForm = () => {
 
                 <input type="number" {...register("sold", { min: 0 })} className="w-full p-2 border rounded" placeholder="Sold" />
 
-                <button type="submit" className="w-full p-2 bg-blue-500 text-white rounded" disabled={loading}>
-                    {loading ? "Creating..." : "Create Product"}
+                <button type="submit" className="w-full p-2 bg-green-500 text-white rounded" disabled={loading}>
+                    {loading ? "Updating..." : "Update Product"}
                 </button>
             </form>
         </>
     );
 };
 
-export default CreateProductForm;
+export default EditProductForm;

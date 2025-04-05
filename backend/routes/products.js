@@ -42,18 +42,41 @@ router.post('/', async function (req, res, next) {
     if (!body.productName || !body.price || !body.categoryId || !body.producerId || body.isPreOrder === undefined || body.stockQuantity === undefined) {
       return res.status(400).json({ message: "productName, price, categoryId, isPreOrder, and stockQuantity are required" });
     }
-    //console.log("Đã tới được đây hehehe");
     await productController.CreateNewProduct(req, res);
-    //console.log("Đã qua được đây hehehe");
   } catch (error) {
     next(error);
   }
 });
 
 router.put('/:id', async function (req, res, next) {
+  try {
+      const body = req.body;
 
+      // Validate đầu vào
+      if (!body.productName || !body.price || !body.categoryId || !body.producerId || body.isPreOrder === undefined || body.stockQuantity === undefined) {
+          return res.status(400).json({
+              message: "productName, price, categoryId, producerId, isPreOrder, and stockQuantity are required"
+          });
+      }
+
+      const updatedProduct = await productController.UpdateProduct(req.params.id, req);
+      return res.status(200).json(updatedProduct);
+  } catch (error) {
+      console.error(error);
+      return res.status(500).json({ error: error.message });
+  }
+});
+
+router.delete('/:id', async function (req, res, next) {
+  try {
+    let body = req.body;
+    console.log(req.params.id)
+    let deleteProduct = await productController.DeleteProduct(req.params.id, body);
+    CreateSuccessRes(res, 200, deleteProduct);
+  } catch (error) {
+    next(error);
+  }
 })
-
 
 
 module.exports = router;
