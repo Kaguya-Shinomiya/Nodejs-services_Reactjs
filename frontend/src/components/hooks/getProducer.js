@@ -10,7 +10,7 @@ const useProducers = () => {
     const fetchProducers = async () => {
       try {
         const response = await axios.get("http://127.0.0.1:5000/producers");
-        setProducers(response.data.data || []); // Lưu danh mục vào state
+        setProducers(response.data.data || []); 
       } catch (error) {
         setError(error.message);
       } finally {

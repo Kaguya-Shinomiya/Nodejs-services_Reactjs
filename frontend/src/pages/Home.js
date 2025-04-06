@@ -60,18 +60,15 @@ const Home = () => {
     ];
 
     // Get Categories
-    const { categories, loading, error } = useCategories(); // Gọi API từ hook
+    const { categories, loading, error } = useCategories();
     const [activeTab, setActiveTab] = useState("");
 
-
-    // Khi dữ liệu categories được tải về, đặt tab đầu tiên làm mặc định
     React.useEffect(() => {
         if (categories.length > 0) {
-            setActiveTab(categories[0]?.name || ""); // Chỉ lấy giá trị `name`
+            setActiveTab(categories[0]?.name || ""); 
         }
     }, [categories]);
 
-    // Get Product from active Tab
     const { products, loading: loadingProducts } = useProducts(activeTab);
 
 
@@ -227,29 +224,24 @@ const Home = () => {
                         {/* Danh mục sản phẩm */}
                         <div className="text-left md:text-right">
                             <div className="inline-flex space-x-2">
-                                {categories.map((category) => (
-                                    <button
-                                        key={category._id}
-                                        onClick={() => setActiveTab(category.name)}
-                                        className={`px-4 py-2 border-2 rounded ${activeTab === category.name
-                                            ? "bg-blue-500 text-white border-blue-500"
-                                            : "border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white"
-                                            } transition`}
-                                    >
-                                        {category.name}
-                                    </button>
-                                ))}
+                                {categories
+                                    .filter((category) => !category.isDelete)
+                                    .map((category) => (
+                                        <button
+                                            key={category._id}
+                                            onClick={() => setActiveTab(category.name)}
+                                            className={`px-4 py-2 border-2 rounded ${activeTab === category.name
+                                                ? "bg-blue-500 text-white border-blue-500"
+                                                : "border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white"
+                                                } transition`}
+                                        >
+                                            {category.name}
+                                        </button>
+                                    ))}
                             </div>
                         </div>
                     </div>
 
-                    {/* Nội dung tab (hiển thị theo danh mục được chọn) */}
-                    {/* <div className="mt-8 text-center">
-                        <h2 className="text-2xl font-semibold">Selected Category: {activeTab}</h2>
-                        <p className="text-gray-500">Displaying products for {activeTab}...</p>
-                    </div> */}
-
-                    {/* Hiển thị sản phẩm theo danh mục */}
                     {loadingProducts ? (
                         <p className="text-center text-gray-500">Loading products...</p>
                     ) : (
@@ -268,12 +260,13 @@ const Home = () => {
                                                             src={`http://127.0.0.1:5000/${product.imageUrl}`}
                                                             alt={product.productName}
                                                         />
-                                                        <div className="absolute top-4 left-4 bg-green-500 text-white text-xs font-semibold px-3 py-1 rounded">
-                                                            New
-                                                        </div>
+                                                        {product.isNewProduct && (
+                                                            <div className="absolute top-4 left-4 bg-green-500 text-white text-xs font-semibold px-3 py-1 rounded">
+                                                                New
+                                                            </div>
+                                                        )}
                                                     </div>
 
-                                                    {/* Thông tin sản phẩm */}
                                                     <div className="p-4 text-center">
                                                         <h3 className="text-lg font-semibold text-gray-800">{product.productName}</h3>
                                                         <p className="text-green-600 font-bold text-lg">{formatCurrency(product.price)}</p>
@@ -284,7 +277,6 @@ const Home = () => {
                                                         )}
                                                     </div>
 
-                                                    {/* Nút thao tác */}
                                                     <div className="flex border-t border-gray-200">
                                                         <button
                                                             className="w-1/2 py-2 text-gray-600 hover:text-green-600 flex justify-center items-center gap-2 border-r"
@@ -325,7 +317,6 @@ const Home = () => {
                 <div className="container mx-auto px-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
 
-                        {/* Nội dung văn bản */}
                         <div className="wow fadeIn" data-wow-delay="0.1s">
                             <h1 className="text-4xl font-bold text-white mb-3">Visit Our Firm</h1>
                             <p className="text-white">
@@ -334,7 +325,6 @@ const Home = () => {
                             </p>
                         </div>
 
-                        {/* Nút bấm */}
                         <div className="text-center md:text-right wow fadeIn" data-wow-delay="0.5s">
                             <a className="btn bg-gray-200 text-blue-700 font-semibold rounded-full py-3 px-6 hover:bg-gray-300 transition" href="#">
                                 Visit Now

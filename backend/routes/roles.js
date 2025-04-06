@@ -1,4 +1,5 @@
 var express = require('express');
+var log_admin = require('../utils/logger');
 var router = express.Router();
 let roleController = require('../controllers/roles')
 var {CreateSuccessRes,CreateErrorRes} = require('../utils/ResHandler')
@@ -15,6 +16,7 @@ router.get('/:id', async function(req, res, next) {
     let user = await roleController.GetRoleById(req.params.id)
     CreateSuccessRes(res,200,user);
   } catch (error) {
+    log_admin.error(`Lỗi khi lấy role theo id: ${req.params.id}`);
     next(error);
   }
 });
@@ -23,6 +25,7 @@ router.post('/', check_authentication,check_authorization(constants.ADMIN_PERMIS
     let newRole = await roleController.CreateRole(req.body.name);
     CreateSuccessRes(res,200,newRole);
   } catch (error) {
+    log_admin.error(`Lỗi khi thêm role: ${req.body}`);
     next(error);
   }
 });
@@ -32,6 +35,7 @@ router.put('/:id', check_authentication,check_authorization(constants.ADMIN_PERM
     let newRole = await roleController.UpdateRole(req.body.id,req.body.name);
     CreateSuccessRes(res,200,newRole);
   } catch (error) {
+    log_admin.error(`Lỗi khi sửa role theo id: : (${req.params.id}), ${req.body}`);
     next(error);
   }
 });
@@ -39,9 +43,10 @@ router.put('/:id', check_authentication,check_authorization(constants.ADMIN_PERM
 router.delete('/:id',check_authentication,check_authorization(constants.ADMIN_PERMISSION), async function (req, res, next) {
   try {
     let body = req.body
-    let deleteRole = await roleController.DeleteRole(req.params.id, req.body);
-    CreateSuccessRes(res, 200, deleteUser);
+    let deleteRole = await roleController.DeleteRole(req.params.id, body);
+    CreateSuccessRes(res, 200, deleteRole);
   } catch (error) {
+     log_admin.error(`Lỗi khi xóa role theo id: : (${req.params.id})`);
     next(error);
   }
 })

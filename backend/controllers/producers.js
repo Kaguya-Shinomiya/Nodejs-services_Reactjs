@@ -1,25 +1,23 @@
 var producerSchema = require('../schemas/producer')
 
-module.exports={
-    GetAllProducer: async ()=>{
+module.exports = {
+    GetAllProducer: async () => {
         return await producerSchema.find({});
     },
-    GetProducerById:async (id)=>{
+    GetProducerById: async (id) => {
         return await producerSchema.findById(id);
     },
-    GetProducerByName:async (name)=>{
-        return await producerSchema.findOne({name: name});
+    GetProducerByName: async (name) => {
+        return await producerSchema.findOne({ name: name });
     },
     CreateNewProducer: async (body) => {
-        let cate_name = await producerSchema.findOne({ name: body.name }).exec();
-        
-        // Nếu danh mục đã tồn tại, báo lỗi
-        if (cate_name) {
-            throw new Error("This producer name already exists. Please try another name.");
+        let producer = await producerSchema.findOne({ name: body.name }).exec();
+
+        if (producer) {
+            return res.status(400).json({ message: "This producer name have already exists. Please try another name." })
         }
-    
-        // Nếu chưa tồn tại, tạo danh mục mới
-        let newCate = new producerSchema({
+
+        let newProcer = new producerSchema({
             name: body.name,
             description: body.description,
             address: body.address,
@@ -27,12 +25,33 @@ module.exports={
             email: body.email,
             isDelete: false
         });
-    
-        return await newCate.save();
+
+        return await newProcer.save();
     },
-    UpdateProducer:async function(id,UpdateObj){
-        if(UpdateObj.role){
-            //
+    UpdateProducer: async function (id, body, res) {
+        let allowFields = ["name", "description","address","phoneNumber","email"];
+        let producer = await producerSchema.findById(id);
+        if (producer) {
+            let producer_name = await producerSchema.findOne({ name: body.name }).exec();
+            if (producer_name) {
+                return res.status(400).json({ message: "This category name have already exists. Please try another name." });
+            }
+            for (const key of Object.keys(body)) {
+                if (allowFields.includes(key)) {
+                    producer[key] = body[key]
+                }
+            }
+            producer.isDelete = false;
+
+            return await producer.save();
+        }
+    },
+
+    deleteCategory: async (id) => {
+        let producer = await producerSchema.findById(id);
+        if (producer) {
+            producer.isDelete = true;
+            return await producer.save();
         }
     }
 }

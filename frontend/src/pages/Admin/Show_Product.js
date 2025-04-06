@@ -39,7 +39,7 @@ const Product = () => {
 
     React.useEffect(() => {
         if (categories.length > 0) {
-            setActiveTab(categories[0]?.name || ""); 
+            setActiveTab(categories[0]?.name || "");
         }
     }, [categories]);
 
@@ -124,8 +124,12 @@ const Product = () => {
                                                     </button>
                                                     <button
                                                         onClick={() => handleDelete(product._id)}
-                                                        disabled={loadingDelete}
-                                                        className="w-1/2 py-2 text-red-600 hover:text-red-800 flex justify-center items-center gap-2 border-r"
+                                                        disabled={loadingDelete || product.isDelete}
+                                                        className={`w-1/2 py-2 flex justify-center items-center gap-2 border-r rounded 
+                                                        ${product.isDelete || loadingDelete
+                                                                ? 'text-red-300 cursor-not-allowed'
+                                                                : 'text-red-600 hover:text-red-800'
+                                                            }`}
                                                     >
                                                         <i className="fa fa-trash text-red-500"></i>
                                                         {loadingDelete ? "Đang xóa..." : "Xóa sản phẩm"}
@@ -139,8 +143,6 @@ const Product = () => {
                             </div>
                         </div>
                     )}
-
-
                 </div>
             </div>
         </>

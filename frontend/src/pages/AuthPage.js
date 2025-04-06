@@ -35,7 +35,6 @@ export default function AuthPage() {
 
                 console.log("Login Response:", response.data);
 
-                // Kiểm tra xem API có trả về token và role không
                 if (!response.data.data.token ) {
                     throw new Error("Login failed: Missing token.");
                 }
@@ -44,33 +43,28 @@ export default function AuthPage() {
                     throw new Error("Login failed: Missing role.");
                 }
 
-                // Lưu token và role vào localStorage
                 localStorage.setItem("token", response.data.data.token);
                 localStorage.setItem("role", response.data.data.user.role.name);
 
                 alert("Login successful!");
 
-                // Điều hướng dựa trên role của user
                 if (response.data.data.user.role.name === "admin") {
                     window.location.href = "/admin/admin_dashboard";
                 } else {
                     window.location.href = "/";
                 }
             } else {
-                // Kiểm tra dữ liệu trước khi đăng ký
                 if (!formData.username || !formData.email || !formData.password || !formData.fullName) {
                     setError("Please fill in all required fields.");
                     setLoading(false);
                     return;
                 }
 
-                // Gửi yêu cầu đăng ký
                 response = await axios.post("http://127.0.0.1:5000/auth/signup", formData);
                 alert("Registration successful! Please log in.");
                 setIsLogin(true);
             }
 
-            // Reset form sau khi đăng nhập/đăng ký thành công
             setFormData({ username: "", email: "", password: "", fullName: "" });
 
         } catch (err) {
@@ -101,7 +95,6 @@ export default function AuthPage() {
                     </button>
                 </div>
 
-                {/* Hiển thị lỗi nếu có */}
                 {error && <p className="text-red-500 text-center">{error}</p>}
 
                 {/* 📝 Form */}
@@ -154,7 +147,6 @@ export default function AuthPage() {
                     </button>
                 </form>
 
-                {/* Chuyển giữa Đăng nhập / Đăng ký */}
                 <p className="text-center text-gray-500 mt-4">
                     {isLogin ? "Don't have an account?" : "Already have an account?"}{" "}
                     <button onClick={() => setIsLogin(!isLogin)} className="text-blue-500 underline">
