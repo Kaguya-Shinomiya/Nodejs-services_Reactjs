@@ -131,7 +131,9 @@ const Product = () => {
                         <div className="tab-content">
                             <div id="tab-1" className="tab-pane fade show p-0 active">
                                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                                    {products.map((product) => (
+                                    {products
+                                    .filter((product) => !product.isDelete && product.stockQuantity > 1)
+                                    .map((product) => (
                                         <div key={product._id} className="animate-fade-up duration-300">
                                             <div className="bg-white shadow-lg rounded-lg overflow-hidden">
                                                 {/* Hình ảnh sản phẩm */}

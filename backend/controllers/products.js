@@ -25,7 +25,7 @@ module.exports = {
             // Tìm sản phẩm dựa theo ID
             let product = await productSchema
                 .findById(id)
-                .populate({ path: "categoryId", select: "name" }) // Đảm bảo "name" tồn tại trong categorySchema
+                .populate({ path: "categoryId", select: "name" })
                 .populate({ path: "producerId", select: "name" })
                 .lean();
 
@@ -190,6 +190,7 @@ module.exports = {
         updateFields.releaseDate = body.releaseDate || null;
         updateFields.isNewProduct = body.isNew || false;
         updateFields.sold = body.sold || 0;
+        updateFields.isDelete = false;
 
         if (imagePaths.length > 0) {
             updateFields.imageUrl = imagePaths[0];

@@ -56,7 +56,16 @@ const Product = () => {
     return (
         <>
             {<Navbar_Admin />}
-            <h1 className="text-4xl font-bold text-center text-blue-600 mb-6">Products</h1>
+            {/* <h1 className="text-4xl font-bold text-center text-blue-600 mb-6">Products</h1> */}
+            <div className="flex justify-between items-center mb-6">
+                <h1 className="text-4xl font-bold text-blue-600">Products</h1>
+                <button
+                    onClick={() => navigate("/admin/create_product")}
+                    className="bg-green-500 text-white px-5 py-2 rounded hover:bg-green-600 transition"
+                >
+                    + Tạo sản phẩm
+                </button>
+            </div>
             <div className="py-10 bg-gray-100">
                 <div className="container mx-auto px-5">
                     {/* Tiêu đề */}
@@ -80,12 +89,6 @@ const Product = () => {
                             </div>
                         </div>
                     </div>
-
-                    {/* Nội dung tab (hiển thị theo danh mục được chọn) */}
-                    {/* <div className="mt-8 text-center">
-                        <h2 className="text-2xl font-semibold">Selected Category: {activeTab}</h2>
-                        <p className="text-gray-500">Displaying products for {activeTab}...</p>
-                    </div> */}
 
                     {/* Hiển thị sản phẩm theo danh mục */}
                     {loadingProducts ? (
