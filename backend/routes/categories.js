@@ -29,9 +29,25 @@ router.post('/', async function(req, res, next) {
     }
 })
 router.put('/:id', async function(req, res, next) {
-  
+  try {
+    //console.log(req.body)
+      let category = await categoryController.UpdateCategory(req.params.id,req.body,res);
+      CreateSuccessRes(res,200,category);
+    } catch (error) {
+      next(error);
+    }
 })
 
+router.delete('/:id', async function (req, res, next) {
+  try {
+    let body = req.body;
+    //console.log(req.params.id);
+    let deleteCategory = await categoryController.deleteCategory(req.params.id, body);
+    CreateSuccessRes(res, 200, deleteCategory);
+  } catch (error) {
+    next(error);
+  }
+})
 
 
 module.exports = router;

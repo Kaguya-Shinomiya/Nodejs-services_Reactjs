@@ -11,6 +11,9 @@ import ProductDetail from "../pages/Product_Detail";
 import ShowProductFrom from "../pages/Admin/Show_Product";
 import CreateProductForm from "../pages/Admin/Create_Product";
 import EditProductForm from "../pages/Admin/Edit_Product";
+import ShowCategoryFrom from "../pages/Admin/Show_Category";
+import CreateCategoryForm from "../pages/Admin/Create_Category";
+import EditCategoryForm from "../pages/Admin/Edit_Category";
 import Admin_Dashboard from "../pages/Admin/Admin_Dashboard";
 
 const AppRoutes = () => {
@@ -31,15 +34,19 @@ const AppRoutes = () => {
       <Route path="/admin/admin_dashboard"
         element={<PrivateRoute element={<Admin_Dashboard />} roles={["admin"]} />} />
 
-      {/* Product */}  
+      {/* Product */}
       <Route path="/admin/show_product"
         element={<PrivateRoute element={<ShowProductFrom />} roles={["admin"]} />} />
       <Route path="/admin/create_product"
         element={<PrivateRoute element={<CreateProductForm />} roles={["admin"]} />} />
       <Route path="/admin/edit_product/:id"
         element={<PrivateRoute element={<EditProductForm />} roles={["admin"]} />} />
-      {/* <Route path="/admin/create_product"
-        element={<PrivateRoute element={<CreateProductForm />} roles={["admin"]} />} /> */}
+      <Route path="/admin/show_category"
+        element={<PrivateRoute element={<ShowCategoryFrom />} roles={["admin"]} />} />
+      <Route path="/admin/create_category"
+        element={<PrivateRoute element={<CreateCategoryForm />} roles={["admin"]} />} />
+      <Route path="/admin/edit_category/:id"
+        element={<PrivateRoute element={<EditCategoryForm />} roles={["admin"]} />} />
     </Routes>
   );
 };

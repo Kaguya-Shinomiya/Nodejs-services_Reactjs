@@ -19,7 +19,7 @@ const Product = () => {
 
 
     // Get Categories
-    const { categories, loading: loadingCategories, error } = useCategories(); // Gọi API từ hook
+    const { categories, loading: loadingCategories, error } = useCategories();
     const [activeTab, setActiveTab] = useState("");
     const { deleteProduct, loading: loadingDelete } = useDeleteProduct();
 
@@ -30,7 +30,6 @@ const Product = () => {
         try {
             await deleteProduct(productId);
             alert("Xóa sản phẩm thành công!");
-            // Reload lại danh sách nếu cần (gọi lại API hoặc filter ra khỏi danh sách)
             window.location.href = "/admin/show_product";
         } catch (err) {
             console.error(err);
@@ -40,7 +39,7 @@ const Product = () => {
 
     React.useEffect(() => {
         if (categories.length > 0) {
-            setActiveTab(categories[0]?.name || ""); // Chỉ lấy giá trị `name`
+            setActiveTab(categories[0]?.name || ""); 
         }
     }, [categories]);
 
@@ -56,7 +55,7 @@ const Product = () => {
     return (
         <>
             {<Navbar_Admin />}
-            {/* <h1 className="text-4xl font-bold text-center text-blue-600 mb-6">Products</h1> */}
+            <br></br>
             <div className="flex justify-between items-center mb-6">
                 <h1 className="text-4xl font-bold text-blue-600">Products</h1>
                 <button
@@ -68,10 +67,9 @@ const Product = () => {
             </div>
             <div className="py-10 bg-gray-100">
                 <div className="container mx-auto px-5">
-                    {/* Tiêu đề */}
+
                     <div className="grid grid-cols-1 md:grid-cols-2 items-end gap-5">
 
-                        {/* Danh mục sản phẩm */}
                         <div className="text-left mb-4"> {/* Đưa text về bên trái & tạo khoảng cách */}
                             <div className="inline-flex space-x-2">
                                 {categories.map((category) => (
@@ -90,7 +88,6 @@ const Product = () => {
                         </div>
                     </div>
 
-                    {/* Hiển thị sản phẩm theo danh mục */}
                     {loadingProducts ? (
                         <p className="text-center text-gray-500">Loading products...</p>
                     ) : (

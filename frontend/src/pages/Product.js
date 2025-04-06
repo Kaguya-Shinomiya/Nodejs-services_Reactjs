@@ -132,48 +132,52 @@ const Product = () => {
                             <div id="tab-1" className="tab-pane fade show p-0 active">
                                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                                     {products
-                                    .filter((product) => !product.isDelete && product.stockQuantity > 1)
-                                    .map((product) => (
-                                        <div key={product._id} className="animate-fade-up duration-300">
-                                            <div className="bg-white shadow-lg rounded-lg overflow-hidden">
-                                                {/* Hình ảnh sản phẩm */}
-                                                <div className="relative bg-gray-100 overflow-hidden">
-                                                    <img
-                                                        className="w-full h-48 object-cover transition-transform duration-300 transform hover:scale-105"
-                                                        src={`http://127.0.0.1:5000/${product.imageUrl}`}
-                                                        alt={product.productName}
-                                                    />
-                                                    <div className="absolute top-4 left-4 bg-green-500 text-white text-xs font-semibold px-3 py-1 rounded">
-                                                        New
+                                        .filter((product) => !product.isDelete && product.stockQuantity > 1)
+                                        .map((product) => (
+                                            <div key={product._id} className="animate-fade-up duration-300">
+                                                <div className="bg-white shadow-lg rounded-lg overflow-hidden">
+                                                    {/* Hình ảnh sản phẩm */}
+                                                    <div className="relative bg-gray-100 overflow-hidden">
+                                                        <img
+                                                            className="w-full h-48 object-cover transition-transform duration-300 transform hover:scale-105"
+                                                            src={`http://127.0.0.1:5000/${product.imageUrl}`}
+                                                            alt={product.productName}
+                                                        />
+                                                        <div className="absolute top-4 left-4 bg-green-500 text-white text-xs font-semibold px-3 py-1 rounded">
+                                                            New
+                                                        </div>
                                                     </div>
-                                                </div>
 
-                                                {/* Thông tin sản phẩm */}
-                                                <div className="p-4 text-center">
-                                                    <h3 className="text-lg font-semibold text-gray-800">{product.productName}</h3>
-                                                    <p className="text-green-600 font-bold text-lg">{formatCurrency(product.price)}</p>
-                                                    <p className="text-gray-400 line-through">{formatCurrency(product.old_price)}</p>
-                                                </div>
+                                                    {/* Thông tin sản phẩm */}
+                                                    <div className="p-4 text-center">
+                                                        <h3 className="text-lg font-semibold text-gray-800">{product.productName}</h3>
+                                                        <p className="text-green-600 font-bold text-lg">{formatCurrency(product.price)}</p>
+                                                        {product.price < product.old_price ? (
+                                                            <p className="text-gray-400 line-through">{formatCurrency(product.old_price)}</p>
+                                                        ) : (
+                                                            <br></br>
+                                                        )}
+                                                    </div>
 
-                                                {/* Nút thao tác */}
-                                                <div className="flex border-t border-gray-200">
-                                                    <button
-                                                        className="w-1/2 py-2 text-gray-600 hover:text-green-600 flex justify-center items-center gap-2 border-r"
-                                                        onClick={() => navigate(`/product_detail/${product._id}`)}>
-                                                        <i className="fa fa-eye text-green-500"></i>
-                                                        View detail
-                                                    </button>
-                                                    <button
-                                                        className="w-1/2 py-2 text-gray-600 hover:text-green-600 flex justify-center items-center gap-2"
-                                                        onClick={() => handleAddToCart(product, navigate)}>
-                                                        <i className="fa fa-shopping-bag text-green-500"></i>
-                                                        Add to cart
-                                                    </button>
-                                                </div>
+                                                    {/* Nút thao tác */}
+                                                    <div className="flex border-t border-gray-200">
+                                                        <button
+                                                            className="w-1/2 py-2 text-gray-600 hover:text-green-600 flex justify-center items-center gap-2 border-r"
+                                                            onClick={() => navigate(`/product_detail/${product._id}`)}>
+                                                            <i className="fa fa-eye text-green-500"></i>
+                                                            View detail
+                                                        </button>
+                                                        <button
+                                                            className="w-1/2 py-2 text-gray-600 hover:text-green-600 flex justify-center items-center gap-2"
+                                                            onClick={() => handleAddToCart(product, navigate)}>
+                                                            <i className="fa fa-shopping-bag text-green-500"></i>
+                                                            Add to cart
+                                                        </button>
+                                                    </div>
 
+                                                </div>
                                             </div>
-                                        </div>
-                                    ))}
+                                        ))}
                                 </div>
                             </div>
                         </div>

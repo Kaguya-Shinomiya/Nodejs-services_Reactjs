@@ -52,7 +52,6 @@ router.put('/:id', async function (req, res, next) {
   try {
       const body = req.body;
 
-      // Validate đầu vào
       if (!body.productName || !body.price || !body.categoryId || !body.producerId || body.isPreOrder === undefined || body.stockQuantity === undefined) {
           return res.status(400).json({
               message: "productName, price, categoryId, producerId, isPreOrder, and stockQuantity are required"
