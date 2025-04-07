@@ -26,8 +26,8 @@ router.post('/', check_authentication,check_authorization(constants.ADMIN_PERMIS
         return res.status(400).json({ message: "Name or phone number or email or address are required" });
       }
 
-      let newCate = await producerController.CreateNewProducer(body);
-      CreateSuccessRes(res,200,newCate);
+      let newProducer = await producerController.CreateNewProducer(body);
+      CreateSuccessRes(res,200,newProducer);
     } catch (error) {
       log_admin.error(`Lỗi khi thêm nhà sản xuất: ${req.body}`);
       next(error);

@@ -33,7 +33,7 @@ module.exports = {
         let category = await categorySchema.findById(id);
         if (category) {
             let cate_name = await categorySchema.findOne({ name: body.name }).exec();
-            if (cate_name) {
+            if (cate_name && category.name != body.name) {
                 return res.status(400).json({ message: "This category name have already exists. Please try another name." });
             }
             for (const key of Object.keys(body)) {

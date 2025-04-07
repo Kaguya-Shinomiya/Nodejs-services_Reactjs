@@ -62,7 +62,7 @@ const Product = () => {
                     onClick={() => navigate("/admin/create_product")}
                     className="bg-green-500 text-white px-5 py-2 rounded hover:bg-green-600 transition"
                 >
-                    + Tạo sản phẩm
+                    + Create Product
                 </button>
             </div>
             <div className="py-10 bg-gray-100">

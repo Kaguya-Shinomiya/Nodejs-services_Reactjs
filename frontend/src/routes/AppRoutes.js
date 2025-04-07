@@ -15,6 +15,9 @@ import EditProductForm from "../pages/Admin/Edit_Product";
 import ShowCategoryFrom from "../pages/Admin/Show_Category";
 import CreateCategoryForm from "../pages/Admin/Create_Category";
 import EditCategoryForm from "../pages/Admin/Edit_Category";
+import CreateProducerForm from "../pages/Admin/Create_Producer";
+import ShowProducerFrom from "../pages/Admin/Show_Producer";
+import EditProducerForm from "../pages/Admin/Edit_Producer";
 import Admin_Dashboard from "../pages/Admin/Admin_Dashboard";
 
 const AppRoutes = () => {
@@ -49,6 +52,12 @@ const AppRoutes = () => {
         element={<PrivateRoute element={<CreateCategoryForm />} roles={["admin"]} />} />
       <Route path="/admin/edit_category/:id"
         element={<PrivateRoute element={<EditCategoryForm />} roles={["admin"]} />} />
+      <Route path="/admin/create_producer"
+        element={<PrivateRoute element={<CreateProducerForm />} roles={["admin"]} />} />
+      <Route path="/admin/show_producer"
+        element={<PrivateRoute element={<ShowProducerFrom />} roles={["admin"]} />} />
+      <Route path="/admin/edit_producer/:id"
+        element={<PrivateRoute element={<EditProducerForm />} roles={["admin"]} />} />
     </Routes>
   );
 };

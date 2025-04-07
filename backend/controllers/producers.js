@@ -13,9 +13,12 @@ module.exports = {
     CreateNewProducer: async (body) => {
         let producer = await producerSchema.findOne({ name: body.name }).exec();
 
+        console.log("bbbbbbbb")
         if (producer) {
             return res.status(400).json({ message: "This producer name have already exists. Please try another name." })
         }
+
+        console.log("aaaaa")
 
         let newProcer = new producerSchema({
             name: body.name,
@@ -33,8 +36,8 @@ module.exports = {
         let producer = await producerSchema.findById(id);
         if (producer) {
             let producer_name = await producerSchema.findOne({ name: body.name }).exec();
-            if (producer_name) {
-                return res.status(400).json({ message: "This category name have already exists. Please try another name." });
+            if (producer_name && producer.name != body.name) {
+                return res.status(400).json({ message: "This producer name have already exists. Please try another name." });
             }
             for (const key of Object.keys(body)) {
                 if (allowFields.includes(key)) {
@@ -47,7 +50,7 @@ module.exports = {
         }
     },
 
-    deleteCategory: async (id) => {
+    deleteProducer: async (id) => {
         let producer = await producerSchema.findById(id);
         if (producer) {
             producer.isDelete = true;

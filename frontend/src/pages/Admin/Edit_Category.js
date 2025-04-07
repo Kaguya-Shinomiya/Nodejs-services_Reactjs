@@ -9,7 +9,7 @@ const EditCategoryForm = () => {
     const navigate = useNavigate();
     const { category, loading: loadingCategory } = useGetCategoryById(id);
     const { updateCategory, loading } = useUpdateCategory();
-    const [serverError, setServerError] = useState(""); // <-- Thêm state lưu lỗi từ server
+    const [serverError, setServerError] = useState("");
 
     const {
         register,
@@ -26,7 +26,7 @@ const EditCategoryForm = () => {
     }, [category, setValue]);
 
     const onSubmit = async (data) => {
-        setServerError(""); // Xóa lỗi cũ
+        setServerError("");
         try {
             await updateCategory(id, data);
             alert("Category updated successfully!");
