@@ -134,7 +134,6 @@ const Product = () => {
                                         .map((product) => (
                                             <div key={product._id} className="animate-fade-up duration-300">
                                                 <div className="bg-white shadow-lg rounded-lg overflow-hidden">
-                                                    {/* Hình ảnh sản phẩm */}
                                                     <div className="relative bg-gray-100 overflow-hidden">
                                                         <img
                                                             className="w-full h-48 object-cover transition-transform duration-300 transform hover:scale-105"

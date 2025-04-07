@@ -45,8 +45,7 @@ router.put('/:id', check_authentication,check_authorization(constants.ADMIN_PERM
 
 router.delete('/:id', check_authentication,check_authorization(constants.ADMIN_PERMISSION), async function (req, res, next) {
   try {
-    let body = req.body;
-    let deleteproducer = await producerController.deleteProducer(req.params.id, body);
+    let deleteproducer = await producerController.deleteProducer(req.params.id);
     CreateSuccessRes(res, 200, deleteproducer);
   } catch (error) {
     log_admin.error(`Lỗi khi xóa nhà sản xuất theo id: : (${req.params.id})`);

@@ -41,7 +41,7 @@ router.post('/login', async function (req, res, next) {
 router.post('/signup', async function (req, res, next) {
     try {
         
-        let { username, password, email, fullName } = req.body;
+        let { username, password, email, fullName, address } = req.body;
 
         // Kiểm tra username & email đã tồn tại chưa
         let existingUser = await userController.FindUser(username, email);
@@ -50,7 +50,7 @@ router.post('/signup', async function (req, res, next) {
         }
 
         
-        let result = await userController.CreateAnUser(username, password, email,fullName, 'user');
+        let result = await userController.CreateAnUser(username, password, email,fullName,address, 'user');
 
         let token = jwt.sign({
             id: result._id,
@@ -103,15 +103,12 @@ router.get("/check-role", authMiddleware, (req, res) => {
             return res.status(400).json({ message: "Không tìm thấy quyền của người dùng" });
         }
 
-        return res.json({ role: req.user.role }); // Trả về role từ token
+        return res.json({ role: req.user.role });
     } catch (error) {
         return res.status(500).json({ message: "Lỗi server" });
     }
 });
 
-// router.get("/check-role", (req, res) => {
-//     const authHeader = req.headers.authorization;
-//     console.log("Header nhận được:", authHeader); // Xem token có tới server không
-// });
+
 
 module.exports = router;

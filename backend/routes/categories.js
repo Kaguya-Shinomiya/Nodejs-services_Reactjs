@@ -45,8 +45,7 @@ router.put('/:id', check_authentication,check_authorization(constants.ADMIN_PERM
 
 router.delete('/:id', check_authentication,check_authorization(constants.ADMIN_PERMISSION), async function (req, res, next) {
   try {
-    let body = req.body;
-    let deleteCategory = await categoryController.deleteCategory(req.params.id, body);
+    let deleteCategory = await categoryController.deleteCategory(req.params.id);
     CreateSuccessRes(res, 200, deleteCategory);
   } catch (error) {
     log_admin.error(`Lỗi khi xóa danh mục theo id: : (${req.params.id})`);

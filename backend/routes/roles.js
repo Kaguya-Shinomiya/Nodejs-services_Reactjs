@@ -42,8 +42,7 @@ router.put('/:id', check_authentication,check_authorization(constants.ADMIN_PERM
 
 router.delete('/:id',check_authentication,check_authorization(constants.ADMIN_PERMISSION), async function (req, res, next) {
   try {
-    let body = req.body
-    let deleteRole = await roleController.DeleteRole(req.params.id, body);
+    let deleteRole = await roleController.DeleteRole(req.params.id);
     CreateSuccessRes(res, 200, deleteRole);
   } catch (error) {
      log_admin.error(`Lỗi khi xóa role theo id: : (${req.params.id})`);

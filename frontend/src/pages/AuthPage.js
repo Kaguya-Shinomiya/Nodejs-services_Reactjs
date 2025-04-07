@@ -1,6 +1,5 @@
 import { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
 export default function AuthPage() {
     const [isLogin, setIsLogin] = useState(true);
@@ -8,12 +7,12 @@ export default function AuthPage() {
         username: "",
         email: "",
         password: "",
-        fullName: ""
+        fullName: "",
+        address: ""
     });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
 
-    const navigate = useNavigate();
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -27,7 +26,6 @@ export default function AuthPage() {
         try {
             let response;
             if (isLogin) {
-                // Gửi request đăng nhập
                 response = await axios.post("http://127.0.0.1:5000/auth/login", {
                     email: formData.email,
                     password: formData.password
@@ -35,7 +33,7 @@ export default function AuthPage() {
 
                 console.log("Login Response:", response.data);
 
-                if (!response.data.data.token ) {
+                if (!response.data.data.token) {
                     throw new Error("Login failed: Missing token.");
                 }
 
@@ -65,7 +63,7 @@ export default function AuthPage() {
                 setIsLogin(true);
             }
 
-            setFormData({ username: "", email: "", password: "", fullName: "" });
+            setFormData({ username: "", email: "", password: "", fullName: "", address: "" });
 
         } catch (err) {
             console.error("Auth Error:", err.response?.data || err.message);
@@ -78,7 +76,7 @@ export default function AuthPage() {
     return (
         <div className="flex items-center justify-center min-h-screen bg-gray-100">
             <div className="bg-white shadow-lg rounded-lg p-8 max-w-sm w-full">
-                
+
                 {/* Tabs */}
                 <div className="flex justify-center mb-6">
                     <button
@@ -117,6 +115,15 @@ export default function AuthPage() {
                                 onChange={handleChange}
                                 placeholder="Full Name"
                                 className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                            <input
+                                type="text"
+                                name="address"
+                                value={formData.address}
+                                onChange={handleChange}
+                                placeholder="Address"
+                                className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                required
                             />
                         </>
                     )}

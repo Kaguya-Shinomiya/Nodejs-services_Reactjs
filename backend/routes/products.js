@@ -72,12 +72,10 @@ router.put('/:id',check_authentication,check_authorization(constants.ADMIN_PERMI
 
 router.delete('/:id',check_authentication,check_authorization(constants.ADMIN_PERMISSION), async function (req, res, next) {
   try {
-    let body = req.body;
-    console.log(req.params.id)
-    let deleteProduct = await productController.DeleteProduct(req.params.id, body);
+    let deleteProduct = await productController.DeleteProduct(req.params.id);
     CreateSuccessRes(res, 200, deleteProduct);
   } catch (error) {
-    log_admin.error(`Lỗi khi xóa sản phẩm ${req.params.id}: ${req.body}`);
+    log_admin.error(`Lỗi khi xóa sản phẩm ${req.params.id}`);
     next(error);
   }
 })
