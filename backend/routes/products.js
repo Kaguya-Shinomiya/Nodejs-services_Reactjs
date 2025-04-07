@@ -3,6 +3,8 @@ var log_admin = require('../utils/logger');
 var router = express.Router();
 let productController = require('../controllers/products')
 var { CreateSuccessRes, CreateErrorRes } = require('../utils/ResHandler')
+let {check_authentication,check_authorization} = require('../utils/check_auth')
+let constants = require('../utils/constants')
 
 /* GET users listing. */
 router.get('/', async function (req, res, next) {
@@ -36,7 +38,7 @@ router.get('/best-sellers/products', async function (req, res, next) {
     CreateErrorRes(res, 404, error);
   }
 });
-router.post('/', async function (req, res, next) {
+router.post('/', check_authentication,check_authorization(constants.ADMIN_PERMISSION),async function (req, res, next) {
   try {
     let body = req.body;
 
@@ -50,7 +52,7 @@ router.post('/', async function (req, res, next) {
   }
 });
 
-router.put('/:id', async function (req, res, next) {
+router.put('/:id',check_authentication,check_authorization(constants.ADMIN_PERMISSION), async function (req, res, next) {
   try {
     const body = req.body;
 
@@ -68,7 +70,7 @@ router.put('/:id', async function (req, res, next) {
   }
 });
 
-router.delete('/:id', async function (req, res, next) {
+router.delete('/:id',check_authentication,check_authorization(constants.ADMIN_PERMISSION), async function (req, res, next) {
   try {
     let body = req.body;
     console.log(req.params.id)

@@ -10,6 +10,8 @@ const useCreateProduct = () => {
         setError(null);
 
         try {
+            const token = localStorage.getItem("token"); 
+
             const formData = new FormData();
             formData.append("productName", data.productName);
             formData.append("price", data.price);
@@ -33,6 +35,7 @@ const useCreateProduct = () => {
             const response = await axios.post("http://127.0.0.1:5000/products", formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
+                    Authorization: `Bearer ${token}`, 
                 },
             });
 

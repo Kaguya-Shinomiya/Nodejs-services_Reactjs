@@ -3,7 +3,8 @@ var log_admin = require('../utils/logger');
 var router = express.Router();
 let producerController = require('../controllers/producers')
 var {CreateSuccessRes,CreateErrorRes} = require('../utils/ResHandler')
-
+let {check_authentication,check_authorization} = require('../utils/check_auth')
+let constants = require('../utils/constants')
 
 router.get('/', async function(req, res, next) {
     let categories = await producerController.GetAllProducer();
@@ -18,7 +19,7 @@ router.get('/:id', async function(req, res, next) {
     CreateErrorRes(res,404,error);
   }
 });
-router.post('/', async function(req, res, next) {
+router.post('/', check_authentication,check_authorization(constants.ADMIN_PERMISSION), async function(req, res, next) {
     try {
       let body = req.body;
       if (!body.name || !body.phoneNumber || !body.email || !body.address) {
@@ -32,7 +33,7 @@ router.post('/', async function(req, res, next) {
       next(error);
     }
 })
-router.put('/:id', async function(req, res, next) {
+router.put('/:id', check_authentication,check_authorization(constants.ADMIN_PERMISSION),async function(req, res, next) {
   try {
       let producer = await producerController.UpdateProducer(req.params.id,req.body,res);
       CreateSuccessRes(res,200,producer);
@@ -42,7 +43,7 @@ router.put('/:id', async function(req, res, next) {
     }
 })
 
-router.delete('/:id', async function (req, res, next) {
+router.delete('/:id', check_authentication,check_authorization(constants.ADMIN_PERMISSION), async function (req, res, next) {
   try {
     let body = req.body;
     let deleteproducer = await producerController.deleteProducer(req.params.id, body);

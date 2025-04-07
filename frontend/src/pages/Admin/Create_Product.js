@@ -46,7 +46,9 @@ const CreateProductForm = () => {
                 <select {...register("categoryId", { required: true })} className="w-full p-2 border rounded">
                     <option value="">Select Category</option>
                     {loadingCategories ? <option>Loading...</option> :
-                        categories.map(category => (
+                        categories
+                        .filter((category) => !category.isDelete)
+                        .map(category => (
                             <option key={category._id} value={category._id}>{category.name}</option>
                         ))}
                 </select>
@@ -55,7 +57,9 @@ const CreateProductForm = () => {
                 <select {...register("producerId", { required: true })} className="w-full p-2 border rounded">
                     <option value="">Select Producer</option>
                     {loadingProducers ? <option>Loading...</option> :
-                        producers.map(producer => (
+                        producers
+                        .filter((producer) => !producer.isDelete)
+                        .map(producer => (
                             <option key={producer._id} value={producer._id}>{producer.name}</option>
                         ))}
                 </select>

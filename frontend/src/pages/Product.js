@@ -100,7 +100,6 @@ const Product = () => {
             <h1 className="text-4xl font-bold text-center text-blue-600 mb-6">Our Products</h1>
             <div className="py-10 bg-gray-100">
                 <div className="container mx-auto px-5">
-                    {/* Tiêu đề */}
                     <div className="grid grid-cols-1 md:grid-cols-2 items-end gap-5">
 
                         <div className="text-left mb-4"> 

@@ -7,6 +7,7 @@ import AuthPage from "../pages/AuthPage";
 import PrivateRoute from "./PrivateRoute"; // Import PrivateRoute
 import Cart from "../pages/Cart";
 import ProductDetail from "../pages/Product_Detail";
+import NotFound from "../pages/404Page"
 
 import ShowProductFrom from "../pages/Admin/Show_Product";
 import CreateProductForm from "../pages/Admin/Create_Product";
@@ -19,6 +20,7 @@ import Admin_Dashboard from "../pages/Admin/Admin_Dashboard";
 const AppRoutes = () => {
   return (
     <Routes>
+      <Route path="*" element={<NotFound />} />
       {/* Clients không cần đăng nhập*/}
       <Route path="/" element={<Home />} />
       <Route path="/about" element={<About />} />

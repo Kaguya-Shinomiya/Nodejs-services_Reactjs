@@ -10,10 +10,20 @@ const useCreateCategory = () => {
         setError(null);
 
         try {
-            const response = await axios.post("http://127.0.0.1:5000/categories", {
-                name: data.name,
-                description: data.description || "",
-            });
+            const token = localStorage.getItem("token");
+
+            const response = await axios.post(
+                "http://127.0.0.1:5000/categories",
+                {
+                    name: data.name,
+                    description: data.description || "",
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`, 
+                    },
+                }
+            );
 
             setLoading(false);
             return response.data;
