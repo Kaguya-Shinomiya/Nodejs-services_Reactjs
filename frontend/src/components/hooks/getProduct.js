@@ -6,7 +6,7 @@ const useProducts = (category) => {
 
     useEffect(() => {
         const fetchProducts = async () => {
-            if (!category) return; // Nếu chưa có danh mục, không gọi API
+            if (!category) return; 
 
             setLoading(true);
             try {

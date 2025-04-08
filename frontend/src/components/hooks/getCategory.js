@@ -10,8 +10,7 @@ const useCategories = () => {
     const fetchCategories = async () => {
       try {
         const response = await axios.get("http://127.0.0.1:5000/categories");
-        //console.log("Fetched Products:", response.data.data ); // Kiểm tra dữ liệu API
-        setCategories(response.data.data || []); // Lưu danh mục vào state
+        setCategories(response.data.data || []);
       } catch (error) {
         setError(error.message);
       } finally {

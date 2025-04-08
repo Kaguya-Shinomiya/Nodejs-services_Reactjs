@@ -20,21 +20,13 @@ module.exports = async function cleanOldLogs() {
 
     for (const file of audit.files) {
         const fileDate = moment(file.date);
-        //console.log(`File Date: ${fileDate.format('YYYY-MM-DD HH:mm:ss')}`);
         const age = now.diff(fileDate, 'days');
-        //console.log("Age: " + age);
-        //console.log(`Now: ${now.format('YYYY-MM-DD HH:mm:ss')}`);
         if (age > retentionDays) {
            
             const baseName = path.basename(file.name);
             const fullPath = path.join(logFolder, baseName);
-            //console.log("Age: " + age);
-            //console.log("baseName: "+baseName);
-            //console.log(fullPath)
             if (!fs.existsSync(fullPath)) {
-                //console.log("hâhahahah");
                 await logController.DeleteLog(baseName);
-                //console.log(`Đã xóa ${baseName} khỏi MongoDB (quá ${retentionDays} ngày và không còn trong logs/)`);
                 log_admin.info(`Đã xóa ${baseName} khỏi MongoDB (quá ${retentionDays} ngày và không còn trong logs/)`);
             }
         }

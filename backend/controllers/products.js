@@ -3,9 +3,6 @@ var categorySchema = require('../schemas/category')
 var producerSchema = require('../schemas/producer')
 var product_ImageSchema = require('../schemas/product_Image')
 var categoryController = require('../controllers/categories')
-// let bcrypt = require('bcrypt')
-
-
 
 module.exports = {
     GetAllProduct: async () => {
@@ -20,23 +17,20 @@ module.exports = {
     },
 
     GetProductById: async (id) => {
-        //return await productSchema.findById(id);
         try {
-            // Tìm sản phẩm dựa theo ID
             let product = await productSchema
                 .findById(id)
-                .populate({ path: "categoryId", select: "name" }) // Đảm bảo "name" tồn tại trong categorySchema
+                .populate({ path: "categoryId", select: "name" })
                 .populate({ path: "producerId", select: "name" })
                 .lean();
 
             if (!product) return null;
 
-            // Tìm danh sách ảnh của sản phẩm
             const images = await product_ImageSchema.find({ productId: id });
 
             return {
                 ...product,
-                images: images || [] // Đảm bảo có mảng ảnh, không bị null
+                images: images || [] 
             };
         } catch (error) {
             console.error("Lỗi khi lấy sản phẩm:", error);
@@ -45,7 +39,6 @@ module.exports = {
     },
     CreateNewProduct: async (req, res) => {
         try {
-            //console.log("Đã vô được CreateNewProduct  hehehe");
             const fs = require("fs");
             const path = require("path");
 
@@ -55,19 +48,16 @@ module.exports = {
             }
             const body = req.body;
 
-            // Kiểm tra danh mục tồn tại
             const categoryExists = await categorySchema.findById(body.categoryId);
             if (!categoryExists) {
                 return res.status(400).json({ error: "Category not found. Please provide a valid categoryId." });
             }
 
-            // Kiểm tra nhà sản xuất tồn tại
             const producerExists = await producerSchema.findById(body.producerId);
             if (!producerExists) {
                 return res.status(400).json({ error: "Producer not found. Please provide a valid producerId." });
             }
 
-            // Kiểm tra và xử lý ảnh (Chỉ hoạt động nếu có `req.files`)
             let imagePaths = [];
 
             if (req.files && req.files.images) {
@@ -79,9 +69,9 @@ module.exports = {
                     const fileName = `${Date.now()}_${image.name}`;
                     const filePath = path.join(uploadDir, fileName);
 
-                    await image.mv(filePath); // Lưu ảnh vào thư mục
+                    await image.mv(filePath); 
 
-                    imagePaths.push(`images/${fileName}`); // Lưu đường dẫn ảnh
+                    imagePaths.push(`images/${fileName}`); 
                 }
             }
 
@@ -91,7 +81,7 @@ module.exports = {
                 price: body.price,
                 old_price: body.old_price,
                 description: body.description || "",
-                imageUrl: imagePaths.length > 0 ? imagePaths[0] : null, // Ảnh đầu tiên
+                imageUrl: imagePaths.length > 0 ? imagePaths[0] : null,
                 categoryId: body.categoryId,
                 producerId: body.producerId,
                 stockQuantity: body.stockQuantity,
@@ -103,7 +93,6 @@ module.exports = {
 
             const savedProduct = await newProduct.save();
 
-            // Lưu ảnh còn lại vào bảng product_images
             if (imagePaths.length > 1) {
                 const productImages = imagePaths.slice(1).map((url) => ({
                     productId: savedProduct._id,
@@ -135,9 +124,6 @@ module.exports = {
         if (!product) {
             throw new Error(`Can't find product with id: ${id}`);
         }
-
-        //console.log(product);
-        //console.log(body);
 
         const categoryExists = await categorySchema.findById(body.categoryId);
         if (!categoryExists) {
@@ -190,6 +176,7 @@ module.exports = {
         updateFields.releaseDate = body.releaseDate || null;
         updateFields.isNewProduct = body.isNew || false;
         updateFields.sold = body.sold || 0;
+        updateFields.isDelete = false;
 
         if (imagePaths.length > 0) {
             updateFields.imageUrl = imagePaths[0];
@@ -201,12 +188,6 @@ module.exports = {
             { $set: updateFields },
             { new: true }
         );
-
-        console.log("typeof product.save:", typeof product.save); // function
-        //console.log("product instanceof mongoose.Model:", product instanceof mongoose.Model);
-        //const savedProduct = await product.save();
-        console.log('Product ID:', product._id);
-        console.log('Is New:', product.isNew);
 
         if (imagePaths.length > 1) {
             await product_ImageSchema.deleteMany({ productId: id });
@@ -226,7 +207,6 @@ module.exports = {
         if (product) {
             product.isDelete = true;
             return await product.save();
-            //console.log("Tìm thấy")
         }
     }
 

@@ -16,7 +16,6 @@ const PrivateRoute = ({ element, roles }) => {
             }
 
             try {
-                //console.log("Đây là token: " + token)
                 const response = await axios.get("http://127.0.0.1:5000/auth/check-role", {
                     headers: { 
                         "Authorization": `Bearer ${token}`,
@@ -25,8 +24,6 @@ const PrivateRoute = ({ element, roles }) => {
 
                 });
 
-                //console.log("Check Role Response:", response.data);
-                //console.log("Đây là role heheehee: "+ response.data.role)
                 if (roles.includes(response.data.role)) {
                     setIsAuthorized(true);
                 } else {
@@ -44,7 +41,7 @@ const PrivateRoute = ({ element, roles }) => {
     }, [token, roles]);
 
     if (loading) return <p>Loading...</p>;
-    if (!isAuthorized) return <Navigate to="/" replace />;
+    if (!isAuthorized) return <Navigate to="/404" replace />;
 
     return element;
 };

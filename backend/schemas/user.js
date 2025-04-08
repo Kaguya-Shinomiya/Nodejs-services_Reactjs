@@ -17,6 +17,10 @@ let userSchema = new mongoose.Schema({
     },fullName:{
         type:String,
         default:"",
+    },
+    address: {
+        type: String,
+        required: true
     },status:{
         type:Boolean,
         default:false
