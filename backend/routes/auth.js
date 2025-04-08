@@ -108,7 +108,39 @@ router.get("/check-role", authMiddleware, (req, res) => {
         return res.status(500).json({ message: "Lỗi server" });
     }
 });
+// 📩 Gửi OTP
+router.post('/forgot-password', async (req, res) => {
+    try {
+        const { email } = req.body;
+        if (!email) return CreateErrorRes(res, 400, "Email là bắt buộc");
+        await userController.RequestPasswordReset(email);
+        return CreateSuccessRes(res, 200, "OTP đã được gửi đến email của bạn");
+    } catch (error) {
+        return CreateErrorRes(res, 400, error.message);
+    }
+});
+// ✅ Xác thực OTP
+router.post('/verify-otp', async (req, res) => {
+    try {
+        const { email, otp } = req.body;
+        if (!email || !otp) return CreateErrorRes(res, 400, "Email và OTP là bắt buộc");
+        await userController.VerifyOTP(email, otp);
+        return CreateSuccessRes(res, 200, "OTP hợp lệ");
+    } catch (error) {
+        return CreateErrorRes(res, 400, error.message);
+    }
+});
 
-
+// 🔁 Đặt lại mật khẩu
+router.post('/reset-password', async (req, res) => {
+    try {
+        const { email, otp, newPassword } = req.body;
+        if (!email || !otp || !newPassword) return CreateErrorRes(res, 400, "Thông tin không đầy đủ");
+        await userController.ResetPasswordWithOTP(email, otp, newPassword);
+        return CreateSuccessRes(res, 200, "Mật khẩu đã được đặt lại");
+    } catch (error) {
+        return CreateErrorRes(res, 400, error.message);
+    }
+});
 
 module.exports = router;

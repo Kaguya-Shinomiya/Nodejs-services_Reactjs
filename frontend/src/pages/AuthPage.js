@@ -145,6 +145,12 @@ export default function AuthPage() {
                         className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                         required
                     />
+                    {/* 🔒 Forgot Password */}
+                    {isLogin && (
+                        <div className="text-right text-sm text-blue-500 hover:underline mb-2 cursor-pointer">
+                            <a href="/forgot-password">Forgot password?</a>
+                        </div>
+                    )}
                     <button
                         type="submit"
                         disabled={loading}

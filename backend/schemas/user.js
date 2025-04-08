@@ -33,7 +33,9 @@ let userSchema = new mongoose.Schema({
         type:Number,
         min:0,
         default:0
-    }
+    },
+    otp: { type: String, default: null },
+    otpExpires: { type: Date, default: null }
 },{
     timestamps:true
 })

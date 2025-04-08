@@ -1,6 +1,9 @@
 var userSchema = require('../schemas/user')
 var roleController = require('../controllers/roles')
 let bcrypt = require('bcrypt')
+const sendEmail = require('../utils/sendEmail');
+
+const generateOTP = () => Math.floor(100000 + Math.random() * 900000).toString();
 
 module.exports = {
     GetAllUser: async () => {
@@ -80,16 +83,55 @@ module.exports = {
             username: username
         })
     },
-    ResetPasswordUser: async function (id) {
-        let user = await userSchema.findById(id);
-        if (GetRole) {
-            if (user) {
-                user.password = "000000";
-                return await user.save();
-            }
-        } else {
-            throw new Error("role sai heheeheheh");
-        }
+    ResetPasswordUser: async (id) => {
+        const user = await userSchema.findById(id);
+        if (!user) throw new Error("Không tìm thấy user");
+    
+        const salt = await bcrypt.genSalt(10);
+        user.password = await bcrypt.hash("000000", salt);
+    
+        return await user.save();
+    },
+    RequestPasswordReset: async (email) => {
+        const user = await userSchema.findOne({ email });
+        if (!user) throw new Error("Email không tồn tại");
 
+        const otp = generateOTP();
+        const expires = new Date(Date.now() + 5 * 60 * 1000);
+
+        user.otp = otp;
+        user.otpExpires = expires;
+        await user.save();
+
+        const message = `Mã OTP của bạn là: ${otp}. Có hiệu lực trong 5 phút.`;
+        await sendEmail(user.email, "Mã OTP đặt lại mật khẩu", message);
+        return true;
+    },
+    VerifyOTP: async (email, otp) => {
+        const user = await userSchema.findOne({ email });
+        if (!user) throw new Error("Email không tồn tại");
+        if (user.otp !== otp) throw new Error("OTP không đúng");
+        if (user.otpExpires < new Date()) throw new Error("OTP đã hết hạn");
+
+        user.otp = null;
+        user.otpExpires = null;
+        await user.save();
+        return user;
+    },
+    ResetPasswordWithOTP: async (email, otp, newPassword) => {
+        const user = await userSchema.findOne({ email });
+        if (!user) throw new Error("Email không tồn tại");
+    
+        if (user.otp !== otp) throw new Error("OTP không đúng");
+        if (!user.otpExpires || user.otpExpires < new Date()) throw new Error("OTP đã hết hạn");
+    
+        user.password = newPassword;
+    
+        // Xóa OTP sau khi dùng
+        user.otp = null;
+        user.otpExpires = null;
+    
+        await user.save();
+        return true;
     }
-}
+};

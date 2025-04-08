@@ -8,7 +8,8 @@ import AuthPage from "../pages/AuthPage";
 import PrivateRoute from "./PrivateRoute"; 
 import Cart from "../pages/Cart";
 import ProductDetail from "../pages/Product_Detail";
-import NotFound from "../pages/404Page"
+import NotFound from "../pages/404Page";
+import ForgotPassword from "../pages/forgot-password"; // 👉 Thêm dòng này
 
 import ShowProductFrom from "../pages/Admin/Show_Product";
 import CreateProductForm from "../pages/Admin/Create_Product";
@@ -39,7 +40,8 @@ const AppRoutes = () => {
       <Route path="/products" element={<Product />} />
       <Route path="/blogs" element={<Blog />} /> 
       <Route path="/login" element={<AuthPage />} />
-      <Route path="/product_detail/:id" element={< ProductDetail />} />
+      <Route path="/forgot-password" element={<ForgotPassword />} /> {/* ✅ Thêm route này */}
+      <Route path="/product_detail/:id" element={<ProductDetail />} />
 
       {/* Clients cần đăng nhập*/}
       <Route path="/cart" element={<Cart />} />
