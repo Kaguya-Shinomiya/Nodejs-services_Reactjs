@@ -3,3 +3,9 @@
     "cors": "^2.8.5"
   }
 }
+
+{
+  "dependencies": {
+    "http-errors": "^2.0.0"
+  }
+}
