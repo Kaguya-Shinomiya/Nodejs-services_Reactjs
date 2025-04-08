@@ -37,6 +37,8 @@ app.use('/categories', require('./routes/categories'));
 app.use('/products', require('./routes/products'));
 app.use('/producers', require('./routes/producers'));
 app.use('/logs', require('./routes/logs'));
+app.use('/blogs', require('./routes/blogs'));
+
 
 
 

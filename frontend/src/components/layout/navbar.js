@@ -67,6 +67,7 @@ const Navbar = () => {
                     <a href="/about" className="block lg:inline-block px-4 py-2 text-base lg:text-lg hover:text-primary hover:scale-105 transition-transform duration-200"> About Us </a>
                     <a href="/products" className="block lg:inline-block px-4 py-2 text-base lg:text-lg hover:text-primary hover:scale-105 transition-transform duration-200"> Products </a>
                     <a href="/contact" className="block lg:inline-block px-4 py-2 text-base lg:text-lg hover:text-primary hover:scale-105 transition-transform duration-200"> Contact Us </a>
+                    <a href="/blogs" className="block lg:inline-block px-4 py-2 text-base lg:text-lg hover:text-primary hover:scale-105 transition-transform duration-200"> Blog </a>
                 </div>
 
                 {/* Icons */}

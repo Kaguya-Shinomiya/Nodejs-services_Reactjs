@@ -1,10 +1,11 @@
 import { Routes, Route } from "react-router-dom";
 import Home from "../pages/Home";
+import Blog from "../pages/Blog";
 import About from "../pages/About";
 import Contact from "../pages/Contact";
 import Product from "../pages/Product";
 import AuthPage from "../pages/AuthPage";
-import PrivateRoute from "./PrivateRoute"; // Import PrivateRoute
+import PrivateRoute from "./PrivateRoute"; 
 import Cart from "../pages/Cart";
 import ProductDetail from "../pages/Product_Detail";
 import NotFound from "../pages/404Page"
@@ -22,6 +23,11 @@ import ShowUserForm from "../pages/Admin/Show_User";
 import EditUserForm from "../pages/Admin/Edit_User";
 import Admin_Dashboard from "../pages/Admin/Admin_Dashboard";
 
+import ShowBlogFrom from "../pages/Admin/Show_Blog";
+import CreateBlogFrom from "../pages/Admin/Create_Blog";
+import EditBlogFrom from "../pages/Admin/Edit_Blog";
+
+
 const AppRoutes = () => {
   return (
     <Routes>
@@ -31,6 +37,7 @@ const AppRoutes = () => {
       <Route path="/about" element={<About />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/products" element={<Product />} />
+      <Route path="/blogs" element={<Blog />} /> 
       <Route path="/login" element={<AuthPage />} />
       <Route path="/product_detail/:id" element={< ProductDetail />} />
 
@@ -64,6 +71,14 @@ const AppRoutes = () => {
         element={<PrivateRoute element={<ShowUserForm />} roles={["admin"]} />} />
       <Route path="/admin/edit_user/:id"
         element={<PrivateRoute element={<EditUserForm />} roles={["admin"]} />} />
+      {/* <Route path="/admin/create_product"
+        element={<PrivateRoute element={<CreateProductForm />} roles={["admin"]} />} /> */}
+      <Route path="/admin/show_blog"
+      element={<PrivateRoute element={<ShowBlogFrom />} roles={["admin"]} />} />
+      <Route path="/admin/create_blog"
+      element={<PrivateRoute element={<CreateBlogFrom />} roles={["admin"]} />} />
+      <Route path="/admin/edit_blog/:id"
+      element={<PrivateRoute element={<EditBlogFrom />} roles={["admin"]} />} />
     </Routes>
   );
 };
