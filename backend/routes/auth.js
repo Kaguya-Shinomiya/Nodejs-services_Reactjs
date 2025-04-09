@@ -108,7 +108,7 @@ router.get("/check-role", authMiddleware, (req, res) => {
         return res.status(500).json({ message: "Lỗi server" });
     }
 });
-// 📩 Gửi OTP
+
 router.post('/forgot-password', async (req, res) => {
     try {
         const { email } = req.body;
@@ -119,7 +119,7 @@ router.post('/forgot-password', async (req, res) => {
         return CreateErrorRes(res, 400, error.message);
     }
 });
-// ✅ Xác thực OTP
+
 router.post('/verify-otp', async (req, res) => {
     try {
         const { email, otp } = req.body;
@@ -131,7 +131,6 @@ router.post('/verify-otp', async (req, res) => {
     }
 });
 
-// 🔁 Đặt lại mật khẩu
 router.post('/reset-password', async (req, res) => {
     try {
         const { email, otp, newPassword } = req.body;

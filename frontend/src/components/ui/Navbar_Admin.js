@@ -11,7 +11,6 @@ const Navbar_Admin = () => {
             <a href="/admin/show_category" className="block lg:inline-block px-4 py-2 text-base lg:text-lg hover:text-primary hover:scale-105 transition-transform duration-200"> Quản lý danh mục </a>
             <a href="/admin/show_producer" className="block lg:inline-block px-4 py-2 text-base lg:text-lg hover:text-primary hover:scale-105 transition-transform duration-200"> Quản lý nhà cung cấp </a>
             <a href="/admin/show_user" className="block lg:inline-block px-4 py-2 text-base lg:text-lg hover:text-primary hover:scale-105 transition-transform duration-200"> Quản lý user </a>
-            <a href="/admin/categories" className="block lg:inline-block px-4 py-2 text-base lg:text-lg hover:text-primary hover:scale-105 transition-transform duration-200"> Quản lý danh mục </a>
             <a href="/admin/show_blog" className="block lg:inline-block px-4 py-2 text-base lg:text-lg hover:text-primary hover:scale-105 transition-transform duration-200"> Quản lý blogs </a>
           </div>
         </nav>

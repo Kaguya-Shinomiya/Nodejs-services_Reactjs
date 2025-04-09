@@ -101,7 +101,6 @@ const EditUserForm = () => {
                         className="w-full p-2 border border-gray-300 rounded"
                     >
                         {roles
-                        .filter((role) => role.name != 'admin')
                         .map((role) => (
                             <option key={role._id} value={role._id}>
                                 {role.name}

@@ -17,6 +17,7 @@ import icon3 from "../assets/images/icon-3.png";
 // Import hooks
 import useCategories from "../components/hooks/getCategory";
 import useProducts from "../components/hooks/getProduct";
+import useBlogs from "../components/hooks/getBlog";
 
 // Imprort utils
 import { formatCurrency } from "../components/utils/format";
@@ -65,17 +66,20 @@ const Home = () => {
 
     React.useEffect(() => {
         if (categories.length > 0) {
-            setActiveTab(categories[0]?.name || ""); 
+            setActiveTab(categories[0]?.name || "");
         }
     }, [categories]);
 
     const { products, loading: loadingProducts } = useProducts(activeTab);
+    const { blogs, loading: loadingBlog } = useBlogs();
 
 
     const navigate = useNavigate();
 
 
     if (loading) return <p className="text-center">Loading...</p>;
+    if (loadingBlog) return <p className="text-center py-10">Loading blog...</p>;
+
     if (error) return <p className="text-center text-red-500">Error: {error}</p>;
 
     return (
@@ -336,6 +340,47 @@ const Home = () => {
             {/* Firm Visit End */}
 
 
+            {/* Blog Start */}
+            <div className="py-12 bg-gray-50">
+                <div className="max-w-6xl mx-auto px-4">
+                    <div className="text-center mb-10">
+                        <h1 className="text-4xl font-bold text-green-600 mb-3">Latest Blog</h1>
+                        <p className="text-gray-600 max-w-xl mx-auto">
+                            Tempor ut dolore lorem kasd vero ipsum sit eirmod sit. Ipsum diam justo sed rebum vero dolor duo.
+                        </p>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {blogs.map((blog, index) => (
+                            <div
+                                key={blog._id || index}
+                                className="bg-white rounded shadow-md overflow-hidden hover:shadow-lg transition duration-300"
+                            >
+                                <img
+                                    src={blog.imageUrl || "/default-blog.jpg"}
+                                    alt={blog.title}
+                                    className="w-full h-56 object-cover"
+                                />
+                                <div className="p-4">
+                                    <a href={`/blog/${blog._id}`} className="block text-xl font-semibold text-gray-800 hover:text-green-600 mb-3">
+                                        {blog.title}
+                                    </a>
+                                    <div className="text-sm text-gray-500 border-t pt-3">
+                                        <span className="mr-4">
+                                            <i className="fa fa-user text-green-500 mr-1"></i>{blog.author || "Admin"}
+                                        </span>
+                                        <span>
+                                            <i className="fa fa-calendar text-green-500 mr-1"></i>
+                                            {new Date(blog.createdAt).toLocaleDateString("en-GB")}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+            {/* Blog End */}
         </>
     );
 };
