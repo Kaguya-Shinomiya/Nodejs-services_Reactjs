@@ -19,9 +19,9 @@ const sendEmail = async (to, subject, text) => {
       text,
     });
 
-    console.log("✅ Gửi email thành công tới:", to);
+    console.log("Gửi email thành công tới:", to);
   } catch (err) {
-    console.error("❌ Gửi email thất bại:", err);
+    console.error("Gửi email thất bại:", err);
     throw new Error("Không thể gửi email");
   }
 };

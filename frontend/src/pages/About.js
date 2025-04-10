@@ -6,7 +6,7 @@ const About = () => {
     <div className="container mx-auto px-4 py-10">
       <h1 className="text-4xl font-bold text-center text-blue-600 mb-6">Về Chúng Tôi</h1>
       <p className="text-lg text-gray-700 text-center max-w-2xl mx-auto">
-        Chúng tôi là một công ty chuyên cung cấp dịch vụ và sản phẩm chất lượng cao. 
+        Chúng tôi là một công ty chuyên cung cấp sản phẩm chất lượng cao. 
         Sứ mệnh của chúng tôi là mang đến giá trị tốt nhất cho khách hàng.
       </p>
       <div className="text-center mt-6">

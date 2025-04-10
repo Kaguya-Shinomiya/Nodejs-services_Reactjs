@@ -79,9 +79,9 @@ const ProductDetail = () => {
             </p>
           )}
           <p className="text-yellow-500 flex items-center gap-2">
-            <i className="fa fa-star-half-alt text-yellow-500"></i> {product.rating}/5 - Đã bán {product.sold} sản phẩm
+            <i className="fa fa-star-half-alt text-yellow-500"></i>
+            {(product.rating || 0).toFixed(1)}/5 - Đã bán {product.sold} sản phẩm
           </p>
-
           <div className="flex items-center mt-4">
             <button className="bg-gray-300 px-3 py-1 rounded-l"
               onClick={() => setQuantity(Math.max(1, quantity - 1))}>-</button>

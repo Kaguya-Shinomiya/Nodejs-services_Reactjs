@@ -13,12 +13,10 @@ module.exports = {
     CreateNewProducer: async (body) => {
         let producer = await producerSchema.findOne({ name: body.name }).exec();
 
-        console.log("bbbbbbbb")
         if (producer) {
             return res.status(400).json({ message: "This producer name have already exists. Please try another name." })
         }
 
-        console.log("aaaaa")
 
         let newProcer = new producerSchema({
             name: body.name,

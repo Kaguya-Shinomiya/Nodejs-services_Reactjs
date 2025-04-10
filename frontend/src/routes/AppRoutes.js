@@ -9,7 +9,7 @@ import PrivateRoute from "./PrivateRoute";
 import Cart from "../pages/Cart";
 import ProductDetail from "../pages/Product_Detail";
 import NotFound from "../pages/404Page";
-import ForgotPassword from "../pages/forgot-password"; // 👉 Thêm dòng này
+import ForgotPassword from "../pages/forgot-password";
 
 import ShowProductFrom from "../pages/Admin/Show_Product";
 import CreateProductForm from "../pages/Admin/Create_Product";
@@ -23,7 +23,6 @@ import EditProducerForm from "../pages/Admin/Edit_Producer";
 import ShowUserForm from "../pages/Admin/Show_User";
 import EditUserForm from "../pages/Admin/Edit_User";
 import Admin_Dashboard from "../pages/Admin/Admin_Dashboard";
-
 import ShowBlogFrom from "../pages/Admin/Show_Blog";
 import CreateBlogFrom from "../pages/Admin/Create_Blog";
 import EditBlogFrom from "../pages/Admin/Edit_Blog";
@@ -34,24 +33,18 @@ const AppRoutes = () => {
   return (
     <Routes>
       <Route path="*" element={<NotFound />} />
-      {/* Clients không cần đăng nhập*/}
       <Route path="/" element={<Home />} />
       <Route path="/about" element={<About />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/products" element={<Product />} />
       <Route path="/blogs" element={<Blog />} /> 
       <Route path="/login" element={<AuthPage />} />
-      <Route path="/forgot-password" element={<ForgotPassword />} /> {/* ✅ Thêm route này */}
+      <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/product_detail/:id" element={<ProductDetail />} />
-
-      {/* Clients cần đăng nhập*/}
       <Route path="/cart" element={<Cart />} />
 
-      {/* Admin - Chỉ admin mới truy cập được */}
       <Route path="/admin/admin_dashboard"
         element={<PrivateRoute element={<Admin_Dashboard />} roles={["admin"]} />} />
-
-      {/* Product */}
       <Route path="/admin/show_product"
         element={<PrivateRoute element={<ShowProductFrom />} roles={["admin"]} />} />
       <Route path="/admin/create_product"
@@ -74,8 +67,6 @@ const AppRoutes = () => {
         element={<PrivateRoute element={<ShowUserForm />} roles={["admin"]} />} />
       <Route path="/admin/edit_user/:id"
         element={<PrivateRoute element={<EditUserForm />} roles={["admin"]} />} />
-      {/* <Route path="/admin/create_product"
-        element={<PrivateRoute element={<CreateProductForm />} roles={["admin"]} />} /> */}
       <Route path="/admin/show_blog"
       element={<PrivateRoute element={<ShowBlogFrom />} roles={["admin"]} />} />
       <Route path="/admin/create_blog"
