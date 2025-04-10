@@ -50,11 +50,44 @@ const Cart = () => {
     updateCart(updatedCart);
   };
 
-  const handleCheckout = () => {
-    alert("Proceeding to checkout...");
-    navigate("/checkout");
+  const handleCheckout = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const userEmail = localStorage.getItem("email"); // Nếu bạn lưu email ở localStorage
+  
+      const totalPrice = cartItems.reduce(
+        (sum, item) => sum + item.price * item.quantity,
+        0
+      );
+  
+      const response = await fetch("http://127.0.0.1:5000/api/order", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}` // nếu có middleware kiểm tra token
+        },
+        body: JSON.stringify({
+          items: cartItems,
+          totalPrice,
+          userEmail
+        })
+      });
+  
+      const data = await response.json();
+  
+      if (response.ok) {
+        alert(`Đặt hàng thành công!\nTổng tiền: ${formatCurrency(totalPrice)}`);
+        localStorage.removeItem("cart");
+        navigate("/success"); // hoặc điều hướng tới trang cảm ơn
+      } else {
+        alert("Lỗi khi đặt hàng: " + data.message);
+      }
+    } catch (error) {
+      console.error("Checkout error:", error);
+      alert("Đã xảy ra lỗi khi thanh toán.");
+    }
   };
-
+  
   return (
     <div className="container mx-auto p-4">
       <h2 className="text-2xl font-bold mb-4">Shopping Cart</h2>

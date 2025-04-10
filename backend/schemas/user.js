@@ -20,7 +20,7 @@ let userSchema = new mongoose.Schema({
     },
     address: {
         type: String,
-        required: true
+        // required: true
     },status:{
         type:Boolean,
         default:false

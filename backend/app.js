@@ -8,6 +8,10 @@ const cors = require("cors")
 const fileUpload = require('express-fileupload');
 const log_admin = require('./utils/logger');
 const cleanOldLogs = require('./utils/cleanOldLogs');
+const orderRoutes = require("./routes/order");
+const paymentRoutes = require('./routes/payment');
+
+
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -39,8 +43,9 @@ app.use('/producers', require('./routes/producers'));
 app.use('/logs', require('./routes/logs'));
 app.use('/reviews', require('./routes/reviews'));
 app.use('/blogs', require('./routes/blogs'));
-
-
+app.use("/api/order", orderRoutes);
+app.use('/api/payment', paymentRoutes);
+app.use('/api/contact', require('./routes/contact'));
 
 
 

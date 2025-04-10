@@ -27,6 +27,7 @@ import Admin_Dashboard from "../pages/Admin/Admin_Dashboard";
 import ShowBlogFrom from "../pages/Admin/Show_Blog";
 import CreateBlogFrom from "../pages/Admin/Create_Blog";
 import EditBlogFrom from "../pages/Admin/Edit_Blog";
+import Success from "../pages/Success";
 
 
 const AppRoutes = () => {
@@ -81,6 +82,7 @@ const AppRoutes = () => {
       element={<PrivateRoute element={<CreateBlogFrom />} roles={["admin"]} />} />
       <Route path="/admin/edit_blog/:id"
       element={<PrivateRoute element={<EditBlogFrom />} roles={["admin"]} />} />
+      <Route path="/success" element={<Success />} />
     </Routes>
   );
 };
