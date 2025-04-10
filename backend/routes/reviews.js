@@ -11,15 +11,7 @@ router.post('/', async (req, res) => {
       return res.status(400).json({ error: 'Vui lòng điền đầy đủ thông tin đánh giá.' });
     }
 
-    // const newReview = new Review({
-    //   productId,
-    //   userName,
-    //   rating,
-    //   comment,
-    //   createdAt: new Date()
-    // });
 
-    // const savedReview = await newReview.save();
     let savedReview = await reviewController.createReview(req, res);
     res.status(201).json(savedReview);
   } catch (err) {

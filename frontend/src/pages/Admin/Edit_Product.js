@@ -7,7 +7,7 @@ import useUpdateProduct from "../../components/hooks/updateProduct";
 import useGetProductById from "../../components/hooks/getProductByID";
 
 const EditProductForm = () => {
-    const { id } = useParams(); // lấy id sản phẩm từ URL
+    const { id } = useParams(); 
     const { register, handleSubmit, setValue, formState: { errors } } = useForm();
     const { categories, loading: loadingCategories } = useCategories();
     const { producers, loading: loadingProducers } = useProducers();
@@ -66,7 +66,7 @@ const EditProductForm = () => {
 
                 <textarea {...register("description")} className="w-full p-2 border rounded" placeholder="Description"></textarea>
 
-                {/* Optional: for editing images */}
+                
                 <input type="file" {...register("imageUrl")} multiple className="w-full p-2 border rounded" />
 
                 <select {...register("categoryId", { required: true })} className="w-full p-2 border rounded">

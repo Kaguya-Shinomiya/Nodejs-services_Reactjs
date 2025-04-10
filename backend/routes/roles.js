@@ -6,7 +6,7 @@ var {CreateSuccessRes,CreateErrorRes} = require('../utils/ResHandler')
 let {check_authentication,check_authorization} = require('../utils/check_auth')
 let constants = require('../utils/constants')
 
-/* GET users listing. */
+
 router.get('/', async function(req, res, next) {
     let users = await roleController.GetAllRole();
     CreateSuccessRes(res,200,users);

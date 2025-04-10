@@ -3,7 +3,6 @@ let jwt = require('jsonwebtoken')
 let userController = require('../controllers/users')
 module.exports = {
     check_authentication: async function (req, res, next) {
-        //console.log("req.headers: " + req.headers.authorization)
         if (!req.headers || !req.headers.authorization) {
             return res.status(401).json({ message: "Bạn chưa đăng nhập" });
         }
@@ -19,7 +18,6 @@ module.exports = {
                 next();
             }
         } else {
-            //throw new Error("ban chua dang nhap")
             console.log("hâhahaha")
             return res.status(401).json({ message: "Bạn chưa đăng nhập" });
         }
@@ -30,7 +28,6 @@ module.exports = {
             if (requiredRole.includes(role)) {
                 next();
             } else {
-                //throw new Error("ban khong co quyen")
                 return res.status(401).json({ message: "Bạn không có quyền" });
             }
         }

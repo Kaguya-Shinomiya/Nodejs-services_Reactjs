@@ -43,7 +43,6 @@ const EditCategoryForm = () => {
         <div className="max-w-xl mx-auto p-6 bg-white shadow-md rounded">
             <h2 className="text-2xl font-bold mb-4 text-green-600 text-center">Chỉnh sửa danh mục</h2>
 
-            {/* Hiển thị lỗi server nếu có */}
             {serverError && (
                 <p className="text-red-500 text-center font-medium mb-4">{serverError}</p>
             )}

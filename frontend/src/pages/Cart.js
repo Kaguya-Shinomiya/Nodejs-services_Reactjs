@@ -7,19 +7,19 @@ const Cart = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Kiểm tra trạng thái đăng nhập
+    
     const user = localStorage.getItem("token");
     if (!user) {
       alert("Bạn cần đăng nhập để xem giỏ hàng!");
-      navigate("/login"); // Điều hướng đến trang đăng nhập
+      navigate("/login"); 
       return;
     }
 
-    // Lấy giỏ hàng từ localStorage
+    
     const storedCart = JSON.parse(localStorage.getItem("cart")) || [];
     const fixedCart = storedCart.map(item => ({
       ...item,
-      quantity: item.quantity ?? 1 // Nếu quantity bị undefined, gán lại là 1
+      quantity: item.quantity ?? 1 
     }));
     setCartItems(fixedCart);
   }, [navigate]);
@@ -53,7 +53,7 @@ const Cart = () => {
   const handleCheckout = async () => {
     try {
       const token = localStorage.getItem("token");
-      const userEmail = localStorage.getItem("email"); // Nếu bạn lưu email ở localStorage
+      const userEmail = localStorage.getItem("email"); 
   
       const totalPrice = cartItems.reduce(
         (sum, item) => sum + item.price * item.quantity,
@@ -64,7 +64,7 @@ const Cart = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}` // nếu có middleware kiểm tra token
+          Authorization: `Bearer ${token}` 
         },
         body: JSON.stringify({
           items: cartItems,
@@ -78,7 +78,7 @@ const Cart = () => {
       if (response.ok) {
         alert(`Đặt hàng thành công!\nTổng tiền: ${formatCurrency(totalPrice)}`);
         localStorage.removeItem("cart");
-        navigate("/success"); // hoặc điều hướng tới trang cảm ơn
+        navigate("/success"); 
       } else {
         alert("Lỗi khi đặt hàng: " + data.message);
       }
@@ -97,10 +97,10 @@ const Cart = () => {
         <div>
           {cartItems.map((item, index) => (
             <div key={index} className="flex items-center justify-between p-2 border-b">
-              {/* Hiển thị hình ảnh sản phẩm */}
+             
               <img src={`http://127.0.0.1:5000/${item.imageUrl}`} alt={item.productName} className="w-16 h-16 object-cover rounded" />
 
-              {/* Thông tin sản phẩm */}
+          
               <div className="flex-1 ml-4">
                 <span>{item.productName} - {formatCurrency(item.price)}</span>
                 <div className="flex items-center mt-2">
@@ -114,12 +114,12 @@ const Cart = () => {
                 </div>
               </div>
 
-              {/* Tổng tiền sản phẩm */}
+          
               <span className="ml-4 font-semibold">
                 Tổng: {formatCurrency(item.price * item.quantity)}
               </span>
 
-              {/* Nút xoá sản phẩm */}
+           
               <button 
                 onClick={() => handleRemoveItem(index)} 
                 className="text-red-500 hover:text-red-700 ml-6">

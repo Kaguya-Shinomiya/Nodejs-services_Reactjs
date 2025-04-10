@@ -1,4 +1,4 @@
-// Import Library
+
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -6,7 +6,7 @@ import { Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 
-// Import images
+
 import carousel1 from "../assets/images/carousel-1.jpg";
 import carousel2 from "../assets/images/carousel-2.jpg";
 import aboutImg from "../assets/images/about.jpg"
@@ -14,16 +14,16 @@ import icon1 from "../assets/images/icon-1.png";
 import icon2 from "../assets/images/icon-2.png";
 import icon3 from "../assets/images/icon-3.png";
 
-// Import hooks
+
 import useCategories from "../components/hooks/getCategory";
 import useProducts from "../components/hooks/getProduct";
 import useBlogs from "../components/hooks/getBlog";
 
-// Imprort utils
+
 import { formatCurrency } from "../components/utils/format";
 import { handleAddToCart } from "../components/utils/cart";
 
-//
+
 const Home = () => {
     const slides = [
         {
@@ -60,7 +60,7 @@ const Home = () => {
         },
     ];
 
-    // Get Categories
+   
     const { categories, loading, error } = useCategories();
     const [activeTab, setActiveTab] = useState("");
 
@@ -84,7 +84,7 @@ const Home = () => {
 
     return (
         <>
-            {/* Carousel Start */}
+            
             <div className="w-full mb-10">
                 <Swiper
                     modules={[Navigation, Autoplay]}
@@ -117,7 +117,7 @@ const Home = () => {
                     ))}
                 </Swiper>
 
-                {/* Custom Navigation Buttons */}
+                
                 <button className="prev-button absolute top-1/2 left-5 transform -translate-y-1/2 bg-green-500 text-white rounded-full p-3">
                     ❮
                 </button>
@@ -125,14 +125,14 @@ const Home = () => {
                     ❯
                 </button>
             </div>
-            {/* Carousel End */}
+            
 
 
-            {/* About Start */}
+            
             <div className="py-10 bg-gray-100">
                 <div className="container mx-auto px-4">
                     <div className="flex flex-col lg:flex-row items-center gap-8">
-                        {/* Image Section */}
+                        
                         <div className="lg:w-1/2 relative overflow-hidden p-5">
                             <img
                                 className="w-full rounded-lg shadow-lg"
@@ -141,7 +141,7 @@ const Home = () => {
                             />
                         </div>
 
-                        {/* Text Section */}
+                        
                         <div className="lg:w-1/2">
                             <h1 className="text-4xl font-bold mb-6 text-gray-800">
                                 Best Organic Fruits And Vegetables
@@ -173,13 +173,13 @@ const Home = () => {
                     </div>
                 </div>
             </div>
-            {/* About End */}
+            
 
 
-            {/* Feature Start */}
+            
             <div className="bg-gray-100 my-10 py-12">
                 <div className="container mx-auto px-5">
-                    {/* Tiêu đề */}
+                    
                     <div className="text-center max-w-xl mx-auto mb-8">
                         <h1 className="text-4xl font-bold mb-3 text-gray-800">Our Features</h1>
                         <p className="text-gray-600">
@@ -187,7 +187,7 @@ const Home = () => {
                         </p>
                     </div>
 
-                    {/* Danh sách Features */}
+                    
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {features.map((feature) => (
                             <div
@@ -210,12 +210,12 @@ const Home = () => {
                     </div>
                 </div>
             </div>
-            {/* Feature End */}
+           
 
-            {/* Product Start */}
+            
             <div className="py-10 bg-gray-100">
                 <div className="container mx-auto px-5">
-                    {/* Tiêu đề */}
+                    
                     <div className="grid grid-cols-1 md:grid-cols-2 items-end gap-5">
                         <div className="max-w-lg">
                             <h1 className="text-4xl font-bold mb-3 text-gray-800">Our Products</h1>
@@ -225,7 +225,7 @@ const Home = () => {
                             <br></br>
                         </div>
 
-                        {/* Danh mục sản phẩm */}
+                       
                         <div className="text-left md:text-right">
                             <div className="inline-flex space-x-2">
                                 {categories
@@ -257,7 +257,7 @@ const Home = () => {
                                         .map((product) => (
                                             <div key={product._id} className="animate-fade-up duration-300">
                                                 <div className="bg-white shadow-lg rounded-lg overflow-hidden">
-                                                    {/* Hình ảnh sản phẩm */}
+                                                
                                                     <div className="relative bg-gray-100 overflow-hidden">
                                                         <img
                                                             className="w-full h-48 object-cover transition-transform duration-300 transform hover:scale-105"
@@ -314,9 +314,9 @@ const Home = () => {
 
                 </div>
             </div>
-            {/* Product End */}
+           
 
-            {/* Firm Visit Start */}
+          
             <div className="bg-blue-600 bg-opacity-90 mt-5 py-12">
                 <div className="container mx-auto px-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
@@ -337,10 +337,10 @@ const Home = () => {
                     </div>
                 </div>
             </div>
-            {/* Firm Visit End */}
+          
 
 
-            {/* Blog Start */}
+           
             <div className="py-12 bg-gray-50">
                 <div className="max-w-6xl mx-auto px-4">
                     <div className="text-center mb-10">
@@ -380,7 +380,7 @@ const Home = () => {
                     </div>
                 </div>
             </div>
-            {/* Blog End */}
+      
         </>
     );
 };

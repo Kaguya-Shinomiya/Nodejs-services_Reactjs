@@ -4,7 +4,7 @@ let logController = require('../controllers/logs');
 const log_admin = require('../utils/logger');
 var { CreateSuccessRes, CreateErrorRes } = require('../utils/ResHandler');
 
-/* GET users listing. */
+
 router.get('/', async function (req, res, next) {
   let logs = await logController.GetAllLogs();
   CreateSuccessRes(res, 200, categories);

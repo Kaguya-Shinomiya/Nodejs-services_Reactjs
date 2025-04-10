@@ -75,7 +75,6 @@ module.exports = {
                 }
             }
 
-            // Tạo sản phẩm mới
             let newProduct = new productSchema({
                 productName: body.productName,
                 price: body.price,
@@ -171,7 +170,6 @@ module.exports = {
             }
         }
 
-        // Default values for some fields
         updateFields.description = body.description || '';
         updateFields.releaseDate = body.releaseDate || null;
         updateFields.isNewProduct = body.isNew || false;
@@ -182,7 +180,6 @@ module.exports = {
             updateFields.imageUrl = imagePaths[0];
         }
 
-        // Perform update
         const updatedProduct = await productSchema.findByIdAndUpdate(
             id,
             { $set: updateFields },

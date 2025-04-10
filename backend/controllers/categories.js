@@ -1,6 +1,5 @@
 var categorySchema = require('../schemas/category')
-// var roleController = require('../controllers/roles')
-// let bcrypt = require('bcrypt')
+
 
 module.exports = {
     GetAllCategory: async () => {
@@ -16,7 +15,6 @@ module.exports = {
         let cate_name = await categorySchema.findOne({ name: name }).exec();
 
         if (cate_name) {
-            // throw new Error("This category name already exists. Please try another name.");
             return res.status(400).json({ message: "This category name already exists. Please try another name." });
         }
 

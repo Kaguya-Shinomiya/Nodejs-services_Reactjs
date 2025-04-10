@@ -12,7 +12,6 @@ const useProducts = (category) => {
             try {
                 const response = await fetch(`http://127.0.0.1:5000/products/category_name/${category}`);
                 const data = await response.json();
-                //console.log("Fetched Products:", data.data); // Kiểm tra dữ liệu API
                 setProducts(data.data || []);
             } catch (error) {
                 console.error("Error fetching products:", error);
@@ -22,7 +21,7 @@ const useProducts = (category) => {
         };
 
         fetchProducts();
-    }, [category]); // Gọi API mỗi khi category thay đổi
+    }, [category]);
 
     return { products, loading };
 };

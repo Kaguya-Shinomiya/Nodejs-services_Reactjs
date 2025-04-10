@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import useFetchProduct from "../components/hooks/getProductByID"; // Import custom hook
+import useFetchProduct from "../components/hooks/getProductByID"; 
 import { handleAddToCart } from "../components/utils/cart";
 import ProductReview from '../components/hooks/ProductReview';
 
@@ -8,7 +8,7 @@ import ProductReview from '../components/hooks/ProductReview';
 import { formatCurrency } from "../components/utils/format";
 
 const ProductDetail = () => {
-  const { id } = useParams(); // Lấy ID sản phẩm từ URL
+  const { id } = useParams(); 
   const { product, loading, selectedImage, setSelectedImage } = useFetchProduct(id);
   const [quantity, setQuantity] = useState(1);
   const navigate = useNavigate();
@@ -20,11 +20,11 @@ const ProductDetail = () => {
     <div className="container mx-auto p-6">
       <div className="grid md:grid-cols-2 gap-8 bg-white shadow-lg rounded-lg p-6">
 
-        {/* Đánh giá sản phẩm */}
+        
         <div className="mt-10">
           <ProductReview productId={id} />
         </div>
-        {/* Hình ảnh sản phẩm */}
+        
         <div className="flex flex-col items-center">
           <img
             src={selectedImage}

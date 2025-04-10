@@ -4,10 +4,8 @@ const productSchema = require('../schemas/product');
 
 exports.getReviewsByProduct = async (req, res) => {
   try {
-    //const reviews = await Review.find({ productId: req.params.productId }).sort({ createdAt: -1 });
     const { productId } = req.params;
     return await reviewSchema.find({ productId }).sort({ createdAt: -1 });
-    //res.json(reviews);
   } catch (err) {
     res.status(500).json({ message: "Lỗi server" });
   }

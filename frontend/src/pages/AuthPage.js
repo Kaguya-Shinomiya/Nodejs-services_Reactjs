@@ -77,7 +77,7 @@ export default function AuthPage() {
         <div className="flex items-center justify-center min-h-screen bg-gray-100">
             <div className="bg-white shadow-lg rounded-lg p-8 max-w-sm w-full">
 
-                {/* Tabs */}
+               
                 <div className="flex justify-center mb-6">
                     <button
                         className={`px-4 py-2 text-lg font-semibold ${isLogin ? "text-blue-500 border-b-2 border-blue-500" : "text-gray-500"}`}
@@ -95,7 +95,7 @@ export default function AuthPage() {
 
                 {error && <p className="text-red-500 text-center">{error}</p>}
 
-                {/* 📝 Form */}
+               
                 <form className="space-y-4" onSubmit={handleSubmit}>
                     {!isLogin && (
                         <>
@@ -145,7 +145,7 @@ export default function AuthPage() {
                         className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                         required
                     />
-                    {/* 🔒 Forgot Password */}
+                    
                     {isLogin && (
                         <div className="text-right text-sm text-blue-500 hover:underline mb-2 cursor-pointer">
                             <a href="/forgot-password">Forgot password?</a>

@@ -127,7 +127,7 @@ module.exports = {
     
         user.password = newPassword;
     
-        // Xóa OTP sau khi dùng
+
         user.otp = null;
         user.otpExpires = null;
     

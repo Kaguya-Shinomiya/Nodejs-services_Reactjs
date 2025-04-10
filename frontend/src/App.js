@@ -1,16 +1,16 @@
 import { useState, useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom"; // Import Router
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom"; 
 import Header from "./components/layout/navbar";
 import Footer from "./components/layout/footer";
 import Spinner from "./components/ui/Spinner";
-import AppRoutes from "./routes/AppRoutes"; // Import file Routes
+import AppRoutes from "./routes/AppRoutes"; 
 import bgImage from './assets/images/bg-icon.png';
 
 function App() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Giả lập tải dữ liệu, ẩn Spinner sau 2 giây
+    
     const timer = setTimeout(() => {
       setLoading(false);
     }, 2000);
@@ -21,7 +21,7 @@ function App() {
   return (
     <Router>
       {loading ? (
-        <Spinner /> // Hiển thị Spinner trước
+        <Spinner /> 
       ) : (
         <div className="flex flex-col min-h-screen bg-cover" style={{ backgroundImage: `url(${bgImage})` }}>
           <Header />

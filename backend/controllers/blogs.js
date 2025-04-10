@@ -58,16 +58,6 @@ module.exports = {
         return await blog.save();
     },  
 
-    // DeleteBlog: async (id) => {
-    //     const blog = await blogSchema.findById(id);
-    //     if (!blog) {
-    //         blog.isDelete = true;
-    //         throw new Error("Blog not found");
-    //     }
-    
-    //     await blogSchema.findByIdAndDelete(id); 
-    //     return { message: "Blog deleted successfully" };
-    // }
 
 
     DeleteBlog: async (id) => {

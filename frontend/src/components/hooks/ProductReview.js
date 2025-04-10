@@ -5,7 +5,6 @@ function ProductReview({ productId }) {
   const [reviews, setReviews] = useState([]);
   const [form, setForm] = useState({ userName: '', rating: 5, comment: '' });
 
-  // Lấy danh sách đánh giá
   const fetchReviews = async () => {
     try {
       const res = await axios.get(`http://localhost:5000/reviews/${productId}`);
@@ -19,7 +18,7 @@ function ProductReview({ productId }) {
     fetchReviews();
   }, [productId]);
 
-  // Gửi đánh giá mới
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -28,7 +27,7 @@ function ProductReview({ productId }) {
         productId,
       });
       setForm({ userName: '', rating: 5, comment: '' });
-      fetchReviews(); // refresh lại danh sách sau khi thêm
+      fetchReviews(); 
     } catch (error) {
       console.error("Lỗi khi gửi đánh giá:", error);
     }
@@ -38,7 +37,7 @@ function ProductReview({ productId }) {
     <div className="mt-10 border-t pt-6">
       <h3 className="text-xl font-semibold mb-4">Đánh giá sản phẩm</h3>
 
-      {/* Danh sách đánh giá */}
+      
       {reviews.length > 0 ? (
         reviews.map((r, i) => (
           <div key={i} className="mb-3 p-4 bg-gray-100 rounded">
@@ -50,7 +49,7 @@ function ProductReview({ productId }) {
         <p>Chưa có đánh giá nào.</p>
       )}
 
-      {/* Form đánh giá */}
+      
       <form onSubmit={handleSubmit} className="mt-6 space-y-4">
         <input
           type="text"

@@ -9,7 +9,6 @@ exports.createOrder = async (req, res) => {
       return res.status(400).json({ message: "Cart is empty." });
     }
 
-    // Kiểm tra tồn kho & trừ số lượng sản phẩm
     for (const item of items) {
       const product = await Product.findById(item._id);
       if (!product) {
@@ -28,7 +27,6 @@ exports.createOrder = async (req, res) => {
       console.log("Sau:", product.stockQuantity);
     }
 
-    // Tạo đơn hàng mới
     const newOrder = new Order({ items, totalPrice, userEmail });
     await newOrder.save();
 

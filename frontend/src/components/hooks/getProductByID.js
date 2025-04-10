@@ -13,7 +13,7 @@ const useFetchProduct = (id) => {
         const productData = response.data.data;
 
         setProduct(productData);
-        setSelectedImage(`http://localhost:5000/${productData.imageUrl}`); // Ảnh chính
+        setSelectedImage(`http://localhost:5000/${productData.imageUrl}`); 
         setLoading(false);
       } catch (error) {
         console.error("Lỗi khi tải sản phẩm:", error);

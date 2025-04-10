@@ -21,12 +21,12 @@ export const handleAddToCart = (product, navigate, num = 1) => {
     console.log(product)
     if (!isAuthenticated) {
         alert("Bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng!");
-        navigate("/login"); // Chuyển hướng sang trang login
+        navigate("/login"); 
         return;
     }
     let i = 0;
     while (i < num) {
-        //console.log(i);
+        
         addToCart(product);
         i++;
     }

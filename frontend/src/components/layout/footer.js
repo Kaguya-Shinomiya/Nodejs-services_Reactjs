@@ -5,7 +5,7 @@ const Footer = () => {
     <div className="bg-gray-900 text-white mt-10 pt-10">
       <div className="container mx-auto px-5 py-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
-          {/* Logo & Description */}
+         {/* Logo & Description */}
           <div>
             <h1 className="text-3xl font-bold text-primary mb-4">F<span className="text-secondary">oo</span>dy</h1>
             <p className="text-gray-400">Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit.</p>

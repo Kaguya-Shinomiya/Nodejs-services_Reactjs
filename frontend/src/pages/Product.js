@@ -1,4 +1,4 @@
-// Import Library
+
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -6,15 +6,15 @@ import { Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 
-// Import images
+
 import carousel1 from "../assets/images/carousel-1.jpg";
 import carousel2 from "../assets/images/carousel-2.jpg";
 
-// Import hooks
+
 import useCategories from "../components/hooks/getCategory";
 import useProducts from "../components/hooks/getProduct";
 
-// Imprort utils
+
 import { formatCurrency } from "../components/utils/format";
 import { handleAddToCart } from "../components/utils/cart";
 
@@ -32,7 +32,7 @@ const Product = () => {
     ];
 
 
-    // Get Categories
+   
     const { categories, loading, error } = useCategories();
     const [activeTab, setActiveTab] = useState("");
 
@@ -43,7 +43,7 @@ const Product = () => {
         }
     }, [categories]);
 
-    // Get Product from active Tab
+    
     const { products, loading: loadingProducts } = useProducts(activeTab);
 
     const navigate = useNavigate();
@@ -54,7 +54,7 @@ const Product = () => {
 
     return (
         <>
-            {/* Carousel Start */}
+            
             <div className="w-full mb-10">
                 <Swiper
                     modules={[Navigation, Autoplay]}
@@ -69,7 +69,7 @@ const Product = () => {
                     {slides.map((slide, index) => (
                         <SwiperSlide key={index} className="relative">
                             <img src={slide.img} alt="Slide" className="w-full h-full object-cover" />
-                            {/* Overlay */}
+                           
                             <div className="absolute inset-0 bg-gray-40 bg-opacity-90 flex items-center">
                                 <div className="container mx-auto px-6">
                                     <h1 className="text-black text-5xl font-bold drop-shadow-lg">{slide.title}</h1>
@@ -87,7 +87,7 @@ const Product = () => {
                     ))}
                 </Swiper>
 
-                {/* Custom Navigation Buttons */}
+                
                 <button className="prev-button absolute top-1/2 left-5 transform -translate-y-1/2 bg-green-500 text-white rounded-full p-3">
                     ❮
                 </button>
@@ -95,7 +95,7 @@ const Product = () => {
                     ❯
                 </button>
             </div>
-            {/* Carousel End */}
+            
 
             <h1 className="text-4xl font-bold text-center text-blue-600 mb-6">Our Products</h1>
             <div className="py-10 bg-gray-100">

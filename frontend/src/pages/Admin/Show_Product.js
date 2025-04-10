@@ -1,4 +1,4 @@
-// Import Library
+
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -6,19 +6,19 @@ import "swiper/css";
 import "swiper/css/navigation";
 
 
-// Import hooks
+
 import useCategories from "../../components/hooks/getCategory";
 import useProducts from "../../components/hooks/getProduct";
 import useDeleteProduct from "../../components/hooks/deleteProduct";
 
-// Imprort ui
+
 import Navbar_Admin from "../../components/ui/Navbar_Admin";
 
 
 const Product = () => {
 
 
-    // Get Categories
+   
     const { categories, loading: loadingCategories, error } = useCategories();
     const [activeTab, setActiveTab] = useState("");
     const { deleteProduct, loading: loadingDelete } = useDeleteProduct();
@@ -43,7 +43,7 @@ const Product = () => {
         }
     }, [categories]);
 
-    // Get Product from active Tab
+    
     const { products, loading: loadingProducts } = useProducts(activeTab);
 
     const navigate = useNavigate();
@@ -70,7 +70,7 @@ const Product = () => {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 items-end gap-5">
 
-                        <div className="text-left mb-4"> {/* Đưa text về bên trái & tạo khoảng cách */}
+                        <div className="text-left mb-4"> 
                             <div className="inline-flex space-x-2">
                                 {categories.map((category) => (
                                     <button
@@ -97,7 +97,7 @@ const Product = () => {
                                     {products.map((product) => (
                                         <div key={product._id} className="animate-fade-up duration-300">
                                             <div className="bg-white shadow-lg rounded-lg overflow-hidden">
-                                                {/* Hình ảnh sản phẩm */}
+                                               
                                                 <div className="relative bg-gray-100 overflow-hidden">
                                                     <img
                                                         className={`w-full h-48 object-cover transition-transform duration-300 transform hover:scale-105 ${product.isDelete ? 'grayscale' : ''}`}
@@ -114,7 +114,7 @@ const Product = () => {
                                                 <div className="p-4 text-center">
                                                     <h3 className="text-lg font-semibold text-gray-800">{product.productName}</h3>
                                                 </div>
-                                                {/* Nút thao tác */}
+                                            
                                                 <div className="flex border-t border-gray-200">
                                                     <button
                                                         className="w-1/2 py-2 text-gray-600 hover:text-green-600 flex justify-center items-center gap-2 border-r"

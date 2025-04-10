@@ -29,7 +29,7 @@ const ForgotPasswordPage = () => {
       });
 
       alert("Đặt lại mật khẩu thành công! Vui lòng đăng nhập lại.");
-      navigate("/login"); // 👉 Điều hướng về trang đăng nhập
+      navigate("/login");
     } catch (error) {
       console.error("Lỗi đặt lại mật khẩu:", error);
       alert(error.response?.data?.message || "OTP không hợp lệ hoặc đã hết hạn");

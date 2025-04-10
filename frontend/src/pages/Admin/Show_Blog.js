@@ -1,15 +1,15 @@
-// Import Library
+
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import "swiper/css";
 import "swiper/css/navigation";
 
-// Import hooks
+
 import useBlogs from "../../components/hooks/getBlog";
 import useDeleteBlog from "../../components/hooks/deleteBlog";
 
-// Import ui
+
 import Navbar_Admin from "../../components/ui/Navbar_Admin";
 
 const Blog = () => {

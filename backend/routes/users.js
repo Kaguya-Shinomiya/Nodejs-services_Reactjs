@@ -6,7 +6,7 @@ var { CreateSuccessRes, CreateErrorRes } = require('../utils/ResHandler')
 let {check_authentication,check_authorization} = require('../utils/check_auth')
 let constants = require('../utils/constants')
 
-/* GET users listing. */
+
 router.get('/',check_authentication,check_authorization(constants.MOD_PERMISSION), async function (req, res, next) {
   try {
     let users = await userController.GetAllUser();
@@ -45,7 +45,7 @@ router.put('/reset_password/:id',check_authentication,check_authorization(consta
     let updateUser = await userController.ResetPasswordUser(req.params.id);
     CreateSuccessRes(res, 200, updateUser);
   } catch (error) {
-    //log_admin.error(`Lỗi khi thêm user với lỗi ${error}`);
+  
     next(error);
   }
 });
